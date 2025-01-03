@@ -1,0 +1,97 @@
+<div class="container table-responsive py-5">
+  <h2 class="text-center">Books</h2>
+  <div class="container mt-4">
+    <div class="d-flex flex-wrap gap-2">
+      <button *ngFor="let letter of alphabets" class="btn"
+        [ngClass]="{ 'btn-primary': selectedLetter === letter, 'btn-outline-primary': selectedLetter !== letter }"
+        (click)="selectLetter(letter)">
+        {{ letter }}
+      </button>
+      <button class="btn"
+        [ngClass]="{ 'btn-primary': selectedLetter === outOfStock, 'btn-outline-primary': selectedLetter !== outOfStock }"
+        (click)="selectLetter(outOfStock)">
+        {{ outOfStock }}
+      </button>
+    </div>
+  </div>
+  <hr>
+  <div class="table-responsive d-none d-md-block" *ngIf="books.length > 0; else noData">
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Book Image</th>
+          <th scope="col">Title</th>
+          <th scope="col">ISBN</th>
+          <th scope="col">Author</th>
+          <th scope="col">Locations</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of books;">
+          <td><img [src]="'data:image/png;base64,' + book.image" height="150" alt="{{ book.title }}"></td>
+          <td>{{ book.title | titlecase }}</td>
+          <td>{{ book.isbn | isbnFormat }}</td>
+          <td>{{ book.author | titlecase }}</td>
+          <td>
+            <table class="table table-bordered">
+              <thead class="thead-dark">
+                <tr>
+                  <td>Almirah</td>
+                  <td>Bed</td>
+                  <td>Box</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ book.locations.almirah }}</td>
+                  <td>{{ book.locations.bed }}</td>
+                  <td>{{ book.locations.box }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="updateBook(book)">Update</button>
+            <hr>
+            <strong>Last Updated On:</strong> {{ book.lastUpdatedOn | date:'dd-MMM-yyyy HH:mm a' }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Mobile View -->
+  <div class="d-block d-md-none">
+    <div class="card mb-2" *ngFor="let book of books;">
+      <div class="card-body d-flex align-items-center">
+        <img [src]="'data:image/png;base64,' + book.image" alt="Image of {{ book.title }}" class="img-thumbnail me-3"
+          width="75" />
+        <div>
+          <h5 class="card-title">{{ book.title | titlecase }}</h5>
+          <p class="card-text">
+            <strong>ISBN:</strong> {{ book.isbn | isbnFormat }} <br />
+            <strong>Author:</strong> {{ book.author | titlecase }}
+          </p>
+          <hr>
+          <h5 class="card-title text-decoration-underline">Locations</h5>
+          <p class="card-text">
+            <strong>Almirah:</strong> {{ book.locations.almirah }} <br />
+            <strong>Bed:</strong> {{ book.locations.bed }} <br />
+            <strong>Box:</strong> {{ book.locations.box }}
+          </p>
+          <hr>
+          <button type="button" class="btn btn-primary btn-sm" (click)="updateBook(book)">Update</button>
+          <br />
+          <strong>Last Updated:</strong> {{ book.lastUpdatedOn | date:'dd-MMM-yyyy HH:mm a' }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Template to show when books array is empty -->
+  <ng-template #noData>
+    <p *ngIf="!selectedLetter">Please select an alphabet.</p>
+    <p *ngIf="selectedLetter">No books available.</p>
+  </ng-template>
+</div>

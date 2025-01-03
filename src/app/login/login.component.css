@@ -1,0 +1,11 @@
+@media (max-width: 768px) { /* Adjust the max-width value as per your requirement */
+    .mobile-img {
+        width: 80%; /* Set desired width for mobile view */
+    }
+}
+
+.centered-image {
+    max-width: 90%; /* Adjust percentage or use a fixed value like 300px */
+    max-height: 90%; /* Ensures it doesn’t overflow the div */
+    object-fit: contain; /* Maintains aspect ratio */
+}

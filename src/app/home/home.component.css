@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-img {
+    width: 10em;
+}
+
+.body {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 207px 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+        "navbar navbar"
+        "sidebar main"
+        "sidebar footer";
+}
+
+nav {
+    top: 0;
+    position: sticky;
+    grid-area: navbar;
+    background-color: #FFF;
+    padding: 1em;
+    border-bottom: 2px solid #ccc; /* Adds a border */    
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Adds a shadow for better visibility */     
+    box-sizing: border-box; /* Ensures padding is included in width/height */
+    z-index: 998;
+}
+
+aside {
+    height: calc(100vh - 91.69px);
+    top: 91.69px;
+    position: sticky;
+    align-self: start;
+    grid-area: sidebar;
+    z-index: 999;
+    background-color: #f4f4f4;/* Light background for the sidebar */
+    border-right: 2px solid #ccc; /* Adds a border */    
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Adds a shadow for better visibility */     
+    box-sizing: border-box; /* Ensures padding is included in width/height */
+}
+
+main {
+    grid-area: main;
+}
+
+footer {
+    bottom: 0;
+    position: sticky;
+    grid-area: footer;
+    background-color: #F5F7FA;
+    padding: 1em;
+}
+
+/* Hide the div by default */
+.mobile-only {
+    display: none;
+}
+
+@media(max-width:800px) {
+    .body {
+        grid-template-columns: 1fr;
+    }
+
+    aside {
+        position: fixed;
+        width: 300px;
+        display: none;
+    }
+
+    .show {
+        display: block;
+    }
+
+    .mobile-only {
+        display: block;
+    }
+}
+
+.right-button {
+    float: right;
+    margin: 10px;
+    /* Optional: Adds some spacing */
+}
+
+/* ------- */
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+ul li {
+    list-style: none;
+}
+
+ul li a {
+    line-height: 40px;
+    padding: 0 20px;
+    color: #111;
+    font-size: 14px !important;
+    text-decoration: none;
+    display: block;
+    text-transform: uppercase;
+    font-weight: 550;
+}
+
+ul li a:hover,
+ul li a.active {
+    color: #9f224e;
+    /*   background: #2196F3; */
+}
+
+.center-align {
+    text-align: center;
+}
+
+.user-details{
+    line-height: 40px;
+    padding: 0 20px;
+    color: #111;
+    font-size: 12px !important;
+    display: block;
+    font-weight: 550;
+}
+
+.bottom-div {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Styling for the bottom div */
+  }
+
+.logout-button
+{
+    cursor: pointer !important;
+}

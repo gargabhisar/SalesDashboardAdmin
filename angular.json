@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "SalesDashboardAdmin": {
+    "BooksInventoryManagementUI": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/sales-dashboard-admin",
+            "outputPath": "dist/books-inventory-management-ui",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -27,15 +27,15 @@
               }
             ],
             "styles": [
+              "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.css"
+              "node_modules/font-awesome/css/font-awesome.min.css",
+              "node_modules/ngx-spinner/animations/timer.css"
             ],
-            "scripts": [],
-            "server": "src/main.server.ts",
-            "prerender": true,
-            "ssr": {
-              "entry": "server.ts"
-            }
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.js",
+              "node_modules/jquery/dist/jquery.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "SalesDashboardAdmin:build:production"
+              "buildTarget": "BooksInventoryManagementUI:build:production"
             },
             "development": {
-              "buildTarget": "SalesDashboardAdmin:build:development"
+              "buildTarget": "BooksInventoryManagementUI:build:development"
             }
           },
           "defaultConfiguration": "development"

@@ -1,0 +1,43 @@
+<div class="body">
+    <nav>
+        <img src="logo.png" class="mobile-img" alt="InkQuills Logo">
+        <div class="menu-toggle right-button mobile-only" (click)="toggleSidebar()"><i class="fa fa-bars"></i></div>
+    </nav>
+    <aside [class.show]="isActive">
+        <ul>
+            <li class="nav-item">
+                <a routerLink="/dashboard" routerLinkActive="active" (click)="toggleSidebar()" class="nav-link"
+                    ariaCurrentWhenActive="page">
+                    <fa-icon [icon]="faHouse"></fa-icon>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a routerLink="/books" (click)="clearalphabet();toggleSidebar()" routerLinkActive="active"
+                    class="nav-link" ariaCurrentWhenActive="page">
+                    <fa-icon [icon]="faBook"></fa-icon>
+                    Books
+                </a>
+            </li>
+        </ul>
+        <hr>
+        <div class="user-details bottom-div">
+            <p>
+                <fa-icon [icon]="faAddressCard"></fa-icon>
+                {{Name}} ({{Role}})
+            </p>
+            <hr>
+            <div class="logout-button" (click)="logout()">
+                <fa-icon [icon]="faRightFromBracket"></fa-icon> Logout
+            </div>
+        </div>
+    </aside>
+    <main>
+        <router-outlet />
+    </main>
+    <footer>
+        <div class="center-align">
+            <strong>InkQuills Publishing House (OPC) Pvt Ltd <i class="fa fa-copyright"></i> 2024</strong>
+        </div>
+    </footer>
+</div>
