@@ -5,21 +5,41 @@
     </nav>
     <aside [class.show]="isActive">
         <ul>
+            <!-- Dashboard -->
             <li class="nav-item">
                 <a routerLink="/dashboard" routerLinkActive="active" (click)="toggleSidebar()" class="nav-link"
                     ariaCurrentWhenActive="page">
                     <i class="fa fa-home" aria-hidden="true"></i> Dashboard
                 </a>
             </li>
-            <li>
-                <a routerLink="/addAuthor" (click)="toggleSidebar()" routerLinkActive="active"
-                    class="nav-link" ariaCurrentWhenActive="page">
-                    <i class="fa fa-user" aria-hidden="true"></i> Add Author
+
+            <!-- Author Menu -->
+            <li class="nav-item">
+                <a href="javascript:void(0);" (click)="toggleSubMenu('author')" class="nav-link">
+                    <i class="fa fa-user" aria-hidden="true"></i> Author
+                    <i [class]="isSubMenuOpen('author') ? 'fa fa-chevron-down' : 'fa fa-chevron-right'"
+                        aria-hidden="true"></i>
                 </a>
+                <ul *ngIf="isSubMenuOpen('author')" class="submenu">
+                    <li>
+                        <a routerLink="/addAuthor" (click)="toggleSidebar()" routerLinkActive="active" class="nav-link"
+                            ariaCurrentWhenActive="page">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Add Author
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/allAuthors" (click)="toggleSidebar()" routerLinkActive="active" class="nav-link"
+                            ariaCurrentWhenActive="page">
+                            <i class="fa fa-list" aria-hidden="true"></i> All Authors
+                        </a>
+                    </li>
+                </ul>
             </li>
-            <li>
-                <a routerLink="/addBook" (click)="toggleSidebar()" routerLinkActive="active"
-                    class="nav-link" ariaCurrentWhenActive="page">
+
+            <!-- Add Book -->
+            <li class="nav-item">
+                <a routerLink="/addBook" routerLinkActive="active" (click)="toggleSidebar()" class="nav-link"
+                    ariaCurrentWhenActive="page">
                     <i class="fa fa-book" aria-hidden="true"></i> Add Book
                 </a>
             </li>

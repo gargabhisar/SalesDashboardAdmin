@@ -1,0 +1,59 @@
+<div class="container table-responsive py-5">
+    <h2 class="text-center">All Authors</h2>
+    <div class="table-responsive d-none d-md-block" *ngIf="authorDetails.length > 0; else noData">
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">DOB</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Mobile</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let author of authorDetails;">
+                    <td><img [src]="author.image" alt="{{ author.name }}" class="img-fluid rounded"
+                            style="width: 50px; height: 50px;"></td>
+                    <td>{{ author.name }}</td>
+                    <td>{{ author.dob }}</td>
+                    <td>{{ author.gender }}</td>
+                    <td>{{ author.email }}</td>
+                    <td>{{ author.mobile }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary">View</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile View -->
+    <div class="d-block d-md-none">
+        <div class="card mb-2" *ngFor="let author of authorDetails;">
+            <div class="card-body d-flex align-items-center">
+                <img [src]="author.image" alt="Image of {{ author.name }}"
+                    class="img-thumbnail me-3" width="75" />
+                <div>
+                    <h5 class="card-title">{{ author.name | titlecase }}</h5>
+                    <p class="card-text">
+                        <strong>Name:</strong> {{ author.name }} <br />
+                        <strong>DOB:</strong> {{ author.dob }}<br />
+                        <strong>Gender:</strong> {{ author.gender }} <br />
+                        <strong>Email:</strong> {{ author.email }}<br />
+                        <strong>Mobile:</strong> {{ author.mobile }}
+                    </p>
+                    <hr>
+                    <button type="button" class="btn btn-primary btn-sm">View</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template to show when books array is empty -->
+    <ng-template #noData>
+        <p>No Authors available.</p>
+    </ng-template>
+</div>

@@ -137,3 +137,18 @@ ul li a.active {
 {
     cursor: pointer !important;
 }
+
+.submenu {
+    padding-left: 20px;
+    margin-top: 5px;
+  }
+  
+  .submenu .nav-link {
+    padding: 8px 15px;
+    font-size: 90%;
+  }
+  
+  .fa-chevron-down,
+  .fa-chevron-right {
+    font-size: 80%;
+  }

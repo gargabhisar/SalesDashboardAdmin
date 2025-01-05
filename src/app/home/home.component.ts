@@ -37,4 +37,14 @@ export class HomeComponent {
   toggleSidebar() {
     this.isActive = !this.isActive;
   }
+
+  activeSubMenu: string | null = null;
+
+  toggleSubMenu(menu: string): void {
+    this.activeSubMenu = this.activeSubMenu === menu ? null : menu;
+  }
+
+  isSubMenuOpen(menu: string): boolean {
+    return this.activeSubMenu === menu;
+  }
 }

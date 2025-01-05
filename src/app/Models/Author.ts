@@ -24,3 +24,13 @@ export interface Author {
     personalBlogLink: string;
     authorId: string;
   }
+
+  export interface AuthorDetails {
+    authorId: string;
+    name: string;
+    dob: string;
+    gender: string;
+    image: string;
+    email: string;
+    mobile: string;    
+  }
