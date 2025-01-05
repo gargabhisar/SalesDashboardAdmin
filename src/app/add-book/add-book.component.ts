@@ -16,9 +16,8 @@ export class AddBookComponent implements OnInit {
   userForm: FormGroup;
   imageBase64: string | null = null; // Store the Base64 string of the image
   authors: Array<Author> | null = null;
-  authorNames: string[] = [];
+  authorNames: Array<{ authorId: string, name: string }> = [];
 
-  // Dynamic field definitions
   fields = [
     {
       key: 'title',
@@ -45,8 +44,8 @@ export class AddBookComponent implements OnInit {
     {
       key: 'size',
       label: 'Size',
-      type: 'select',
-      options: ['5x8', '5.5x8.5', '6x9', '8.5x11', 'Pocket Book'],
+      type: 'text',
+      placeholder: 'Enter Size (5x8, 5.5x8.5, 6x9, 8.5x11, Pocket Book)',
       validators: [Validators.required],
       errors: [{ key: 'required', message: 'Size is required' }],
     },
@@ -106,7 +105,7 @@ export class AddBookComponent implements OnInit {
       key: 'authorid',
       label: 'Author',
       type: 'select',
-      options: this.authorNames,
+      options: [] as { authorId: string; name: string }[],
       validators: [Validators.required],
       errors: [{ key: 'required', message: 'Author is required' }],
     },
@@ -126,9 +125,17 @@ export class AddBookComponent implements OnInit {
         } else {
           this.authors = data.result;
           if (this.authors) {
-            this.authorNames = this.authors.map((author) => author.name);
-            // Now update the field options dynamically
-            this.fields.find((field) => field.key === 'authorid')!.options = this.authorNames;
+            // Map the authors to an array of objects {authorId, name}
+            this.authorNames = this.authors.map((author) => ({
+              authorId: author.authorId, // Ensure the correct attribute names are used
+              name: author.name,
+            }));
+
+            // Update the options for the 'authorid' field
+            const authorField = this.fields.find((field) => field.key === 'authorid');
+            if (authorField) {
+              authorField.options = this.authorNames; // Assign the mapped author objects
+            }
           }
         }
       },
@@ -161,27 +168,8 @@ export class AddBookComponent implements OnInit {
   onSubmit() {
     if (this.userForm.valid) {
       const formData = { ...this.userForm.value };
-      formData.image = this.imageBase64; // Add the Base64 image to form data
-
-      let updateBookStatus = this.webapi.addAuthor(formData);
-      updateBookStatus.subscribe((data: any) => {
-        if (data.statusCode == 400) {
-          Swal.fire({
-            title: data.validation[0].title,
-            text: data.validation[0].details,
-            icon: 'error',
-            confirmButtonText: 'Ok'
-          });
-        }
-        else {
-          this.userForm.reset();
-          this.imageBase64 = null;
-          Swal.fire({
-            title: data.message,
-            icon: "success"
-          });
-        }
-      })
+      formData.image = this.imageBase64;
+      console.log(formData);
     } else {
       console.log('Form is invalid. Please check the highlighted fields.');
       this.userForm.markAllAsTouched();

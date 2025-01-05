@@ -15,9 +15,10 @@
                     <!-- Textarea -->
                     <textarea *ngIf="field.type === 'textarea'" [id]="field.key" class="form-control"
                         [formControlName]="field.key" [placeholder]="field.placeholder" rows="4"></textarea>
-                    <!-- Select Input (for Size and Author fields) -->
+                    <!-- Select Input (for Author fields) -->
                     <select *ngIf="field.type === 'select'" [id]="field.key" class="form-select" [formControlName]="field.key">
-                        <option *ngFor="let option of field.options" [value]="option">{{ option }}</option>
+                        <!-- Loop through the options and display the author's name, bind the 'authorId' as the value -->
+                        <option *ngFor="let option of field.options" [value]="option.authorId">{{ option.name }}</option>
                       </select>
                     <!-- Validation Errors -->
                     <div *ngIf="f[field.key].invalid && (f[field.key].touched || f[field.key].dirty)"
