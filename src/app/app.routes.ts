@@ -3,6 +3,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AddAuthorComponent } from './add-author/add-author.component';
+import { AddBookComponent } from './add-book/add-book.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent, pathMatch: 'full' },
@@ -11,7 +12,8 @@ export const routes: Routes = [
         path: '', component: HomeComponent,
         children: [
             { path: 'dashboard', component: DashboardComponent },
-            { path: 'addAuthor', component: AddAuthorComponent }
+            { path: 'addAuthor', component: AddAuthorComponent },
+            { path: 'addBook', component: AddBookComponent }
         ]
     }
 ];

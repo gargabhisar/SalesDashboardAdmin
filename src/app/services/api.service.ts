@@ -13,7 +13,7 @@ export class ApiService {
   private publisherLogin_url = "Login/PublisherLogin";
   private addAuthor_url = "Author/AddAuthor";
 
-  private updateBooks_url = "Books/UpdateBook";
+  private getAllAuthors_url = "Author/GetAllAuthors";
   private getDasboard_url = "Dashboard/AdminDashboardDetails";
 
   constructor(private http: HttpClient) { }
@@ -56,8 +56,8 @@ export class ApiService {
     return obs;
   }
 
-  updateBooksCount(book: Book) {
-    let obs = this.http.post(this.base_url + this.updateBooks_url, book);
+  getAllAuthors() {
+    let obs = this.http.get<any>(this.base_url + this.getAllAuthors_url);
     return obs;
   }
 }

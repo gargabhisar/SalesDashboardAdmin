@@ -22,4 +22,5 @@ export interface Author {
     youtubeLink: string;
     twitterLink: string;
     personalBlogLink: string;
+    authorId: string;
   }
