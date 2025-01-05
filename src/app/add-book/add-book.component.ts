@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../services/api.service';
@@ -12,7 +12,7 @@ import { Author } from '../Models/Author';
   templateUrl: './add-book.component.html',
   styleUrl: './add-book.component.css'
 })
-export class AddBookComponent {
+export class AddBookComponent implements OnInit {
   userForm: FormGroup;
   imageBase64: string | null = null; // Store the Base64 string of the image
   authors: Array<Author> | null = null;
@@ -112,7 +112,7 @@ export class AddBookComponent {
     },
   ];
 
-  ngOnit(){
+  ngOnInit(): void {
     this.webapi.getAllAuthors().subscribe({
       next: (data: any) => {
         if (data.statusCode == 400) {
@@ -134,7 +134,7 @@ export class AddBookComponent {
   }
 
   constructor(private fb: FormBuilder, private webapi: ApiService,) {
-    
+
     // Explicitly define the type for the group object
     const group: { [key: string]: any } = {};
 
