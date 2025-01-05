@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faHouse, faBook, faBars, faRightFromBracket, faAddressCard } from '@fortawesome/free-solid-svg-icons';
 import { ApiService } from '../services/api.service';
 
 @Component({
@@ -13,11 +12,6 @@ import { ApiService } from '../services/api.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  faHouse = faHouse;
-  faBook = faBook;
-  faBars = faBars;
-  faRightFromBracket = faRightFromBracket;
-  faAddressCard = faAddressCard;
 
   isActive: boolean = false;
 
@@ -33,10 +27,6 @@ export class HomeComponent {
 
     this.Name = loggedInUser?.name;
     this.Role = loggedInUser?.role;
-  }
-
-  clearalphabet() {
-    this.webapi.clearalphabet();
   }
 
   logout() {

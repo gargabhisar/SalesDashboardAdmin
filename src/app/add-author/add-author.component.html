@@ -1,0 +1,38 @@
+<div class="container py-5">
+    <h2 class="text-center">Add Author</h2>
+    <div class="container mt-4">
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="row g-3">
+            <!-- Loop for fields -->
+            <ng-container *ngFor="let field of fields">
+                <div class="col-md-6"
+                    [ngClass]="{ 'has-error': f[field.key].invalid && (f[field.key].touched || f[field.key].dirty) }">
+                    <label [for]="field.key" class="form-label">{{ field.label }}</label>
+                    <!-- Input types -->
+                    <input *ngIf="field.type !== 'textarea' && field.type !== 'select'" [type]="field.type"
+                        [id]="field.key" class="form-control" [formControlName]="field.key"
+                        [placeholder]="field.placeholder" [accept]="field.type === 'file' ? 'image/*' : null" (change)="onFileChange($event)"/>
+                    <!-- Textarea -->
+                    <textarea *ngIf="field.type === 'textarea'" [id]="field.key" class="form-control"
+                        [formControlName]="field.key" [placeholder]="field.placeholder" rows="4"></textarea>
+                    <!-- Select -->
+                    <select *ngIf="field.type === 'select'" [id]="field.key" class="form-select"
+                        [formControlName]="field.key">
+                        <option *ngFor="let option of field.options" [value]="option">{{ option }}</option>
+                    </select>
+                    <!-- Validation Errors -->
+                    <div *ngIf="f[field.key].invalid && (f[field.key].touched || f[field.key].dirty)"
+                        class="text-danger mt-1">
+                        <small *ngFor="let error of field.errors">
+                            <ng-container *ngIf="f[field.key].hasError(error.key)">{{ error.message }}</ng-container>
+                        </small>
+                    </div>
+                </div>
+            </ng-container>
+
+            <!-- Submit Button -->
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

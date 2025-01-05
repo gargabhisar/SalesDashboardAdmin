@@ -17,6 +17,7 @@ export class LoginComponent {
   loginForm = new FormGroup({
     useremail: new FormControl('', [Validators.required, Validators.email]),
     userpassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    publicationid: new FormControl('677800910b61ed7b0b6b6e71')
   });
 
   constructor(private formBuilder: FormBuilder, private router: Router, private webapi: ApiService) { 

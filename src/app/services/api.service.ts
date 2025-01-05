@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Book } from '../Models/Book';
+import { Author } from '../Models/Author';
 
 @Injectable({
   providedIn: 'root'
@@ -8,14 +9,12 @@ import { Book } from '../Models/Book';
 export class ApiService {
 
   private data: any = null;
-  private alphabet: any = null;
-  //private base_url = "http://localhost:8080/";
-  private base_url ="https://abhisargarg-001-site1.qtempurl.com/";
-  private userLogin_url = "Login/AdminLogin";
-  private getBooksByAlphabet_url = "Books/GetBooksByAlphabet";
+  private base_url = "https://localhost:7203/";
+  private publisherLogin_url = "Login/PublisherLogin";
+  private addAuthor_url = "Author/AddAuthor";
+
   private updateBooks_url = "Books/UpdateBook";
   private getDasboard_url = "Dashboard/AdminDashboardDetails";
-  private getOutOfStockBooks_url = "Books/GetOutOfStockBooks";
 
   constructor(private http: HttpClient) { }
 
@@ -30,13 +29,7 @@ export class ApiService {
   }
 
   login(logindetails: any) {
-    let obs = this.http.post(this.base_url + this.userLogin_url, logindetails);
-    return obs;
-  }
-
-  getBooksByAlphabet(alphabet: any) {
-    let url = this.base_url + this.getBooksByAlphabet_url + "?alphabet=" + alphabet;
-    let obs = this.http.get<any>(url, alphabet);
+    let obs = this.http.post(this.base_url + this.publisherLogin_url, logindetails);
     return obs;
   }
 
@@ -52,32 +45,19 @@ export class ApiService {
     this.data = null;
   }
 
-  updateBooksCount(book: Book) {
-    let obs = this.http.post(this.base_url + this.updateBooks_url, book);
-    return obs;
-  }
-
-  setalphabet(value: any) {
-    this.alphabet = value;
-  }
-
-  getalphabet() {
-    return this.alphabet;
-  }
-
-  clearalphabet() {
-    this.alphabet = null;
-  }
-
   getDashboardDetails() {
     let url = this.base_url + this.getDasboard_url;
     let obs = this.http.get<any>(url);
     return obs;
   }
 
-  getOutOfStockBooks(){
-    let url = this.base_url + this.getOutOfStockBooks_url;
-    let obs = this.http.get<any>(url);
+  addAuthor(author: Author) {
+    let obs = this.http.post(this.base_url + this.addAuthor_url, author);
+    return obs;
+  }
+
+  updateBooksCount(book: Book) {
+    let obs = this.http.post(this.base_url + this.updateBooks_url, book);
     return obs;
   }
 }

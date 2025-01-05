@@ -8,27 +8,25 @@
             <li class="nav-item">
                 <a routerLink="/dashboard" routerLinkActive="active" (click)="toggleSidebar()" class="nav-link"
                     ariaCurrentWhenActive="page">
-                    <fa-icon [icon]="faHouse"></fa-icon>
-                    Dashboard
+                    <i class="fa fa-home" aria-hidden="true"></i> Dashboard
                 </a>
             </li>
             <li>
-                <a routerLink="/books" (click)="clearalphabet();toggleSidebar()" routerLinkActive="active"
+                <a routerLink="/addAuthor" (click)="toggleSidebar()" routerLinkActive="active"
                     class="nav-link" ariaCurrentWhenActive="page">
-                    <fa-icon [icon]="faBook"></fa-icon>
-                    Books
+                    <i class="fa fa-user" aria-hidden="true"></i> Add Author
                 </a>
             </li>
         </ul>
         <hr>
         <div class="user-details bottom-div">
             <p>
-                <fa-icon [icon]="faAddressCard"></fa-icon>
+                <i class="fa fa-address-card" aria-hidden="true"></i>
                 {{Name}} ({{Role}})
             </p>
             <hr>
             <div class="logout-button" (click)="logout()">
-                <fa-icon [icon]="faRightFromBracket"></fa-icon> Logout
+                <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
             </div>
         </div>
     </aside>
@@ -37,7 +35,7 @@
     </main>
     <footer>
         <div class="center-align">
-            <strong>InkQuills Publishing House (OPC) Pvt Ltd <i class="fa fa-copyright"></i> 2024</strong>
+            <strong>InkQuills Publishing House (OPC) Pvt Ltd <i class="fa fa-copyright"></i> 2025</strong>
         </div>
     </footer>
 </div>
