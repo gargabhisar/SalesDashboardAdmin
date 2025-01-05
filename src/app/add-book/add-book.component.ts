@@ -16,7 +16,7 @@ export class AddBookComponent implements OnInit {
   userForm: FormGroup;
   imageBase64: string | null = null; // Store the Base64 string of the image
   authors: Array<Author> | null = null;
-  authorNames: string[] | null = null;
+  authorNames: string[] = [];
 
   // Dynamic field definitions
   fields = [
@@ -113,6 +113,7 @@ export class AddBookComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    // Fetch authors after component initializes
     this.webapi.getAllAuthors().subscribe({
       next: (data: any) => {
         if (data.statusCode == 400) {
@@ -122,13 +123,17 @@ export class AddBookComponent implements OnInit {
             icon: 'error',
             confirmButtonText: 'Ok'
           });
-        }
-        else {
+        } else {
           this.authors = data.result;
-          if (this.authors != null) {
-            this.authorNames = this.authors.map(author => author.name);
+          if (this.authors) {
+            this.authorNames = this.authors.map((author) => author.name);
+            // Now update the field options dynamically
+            this.fields.find((field) => field.key === 'authorid')!.options = this.authorNames;
           }
         }
+      },
+      error: (error) => {
+        console.error('Error fetching authors:', error);
       }
     });
   }
