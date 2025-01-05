@@ -44,8 +44,14 @@ export class AddBookComponent implements OnInit {
     {
       key: 'size',
       label: 'Size',
-      type: 'text',
-      placeholder: 'Enter Size (5x8, 5.5x8.5, 6x9, 8.5x11, Pocket Book)',
+      type: 'select',
+      options: [
+        { id: '5x8', name: '5x8' },
+        { id: '5.5x8.5', name: '5.5x8.5' },
+        { id: '6x9', name: '6x9' },
+        { id: '8.5x11', name: '8.5x11' },
+        { id: 'Pocket Book', name: 'Pocket Book' }
+      ] as { id: string; name: string }[],
       validators: [Validators.required],
       errors: [{ key: 'required', message: 'Size is required' }],
     },
