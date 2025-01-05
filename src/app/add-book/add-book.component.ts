@@ -16,7 +16,7 @@ export class AddBookComponent implements OnInit {
   userForm: FormGroup;
   imageBase64: string | null = null; // Store the Base64 string of the image
   authors: Array<Author> | null = null;
-  authorNames: Array<{ authorId: string, name: string }> = [];
+  authorNames: Array<{ id: string, name: string }> = [];
 
   fields = [
     {
@@ -105,7 +105,7 @@ export class AddBookComponent implements OnInit {
       key: 'authorid',
       label: 'Author',
       type: 'select',
-      options: [] as { authorId: string; name: string }[],
+      options: [] as { id: string; name: string }[],
       validators: [Validators.required],
       errors: [{ key: 'required', message: 'Author is required' }],
     },
@@ -125,9 +125,9 @@ export class AddBookComponent implements OnInit {
         } else {
           this.authors = data.result;
           if (this.authors) {
-            // Map the authors to an array of objects {authorId, name}
+            // Map the authors to an array of objects {id, name}
             this.authorNames = this.authors.map((author) => ({
-              authorId: author.authorId, // Ensure the correct attribute names are used
+              id: author.authorId, // Ensure the correct attribute names are used
               name: author.name,
             }));
 
