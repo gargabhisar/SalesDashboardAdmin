@@ -6,7 +6,7 @@ import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
-
+import Swal from 'sweetalert2';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
@@ -43,10 +43,32 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             case 403:     //forbidden
               router.navigateByUrl("/unauthorized");
               break;
+            case 400:
+              // Extract validation errors
+              const validationErrors = error.error.errors;
+              let errorMessage = 'Validation errors occurred:\n';
+              for (const field in validationErrors) {
+                if (validationErrors.hasOwnProperty(field)) {
+                  errorMessage += `${field}: ${validationErrors[field].join(', ')}\n`;
+                }
+              }
+
+              // Show error message with SweetAlert
+              Swal.fire({
+                title: 'Validation Error',
+                text: errorMessage,
+                icon: 'error',
+                confirmButtonText: 'OK',
+              });
           }
         }
       } else {
-        console.error("some thing else happened");
+        Swal.fire({
+          title: 'Error',
+          text: error.message || 'An unexpected error occurred.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
       }
       return throwError(error.message);
     }),
