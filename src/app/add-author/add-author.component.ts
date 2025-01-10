@@ -226,7 +226,7 @@ export class AddAuthorComponent {
     }
   ];
 
-  constructor(private fb: FormBuilder, private webapi: ApiService,) {
+  constructor(private fb: FormBuilder, private webapi: ApiService) {
     // Explicitly define the type for the group object
     const group: { [key: string]: any } = {};
 

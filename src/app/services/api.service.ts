@@ -13,8 +13,10 @@ export class ApiService {
   private publisherLogin_url = "Login/PublisherLogin";
   private addAuthor_url = "Author/AddAuthor";
 
+
   private getAllAuthors_url = "Author/GetAllAuthors";
   private getAllAuthorDetails_url = "Author/GetAllAuthorDetails";
+  private getAuthorDetailsById_url = "Author/AuthorDetailsById";
   private getDasboard_url = "Dashboard/AdminDashboardDetails";
 
   constructor(private http: HttpClient) { }
@@ -64,6 +66,11 @@ export class ApiService {
 
   getAllAuthorDetails() {
     let obs = this.http.get<any>(this.base_url + this.getAllAuthorDetails_url);
+    return obs;
+  }
+
+  getAuthorDetailsById(authorID: string) {
+    let obs = this.http.get<any>(this.base_url + this.getAuthorDetailsById_url + "?authorId=" + authorID);
     return obs;
   }
 }
