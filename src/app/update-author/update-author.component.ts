@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../services/api.service';
+import Swal from 'sweetalert2';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-author',
@@ -12,252 +13,100 @@ import { ApiService } from '../services/api.service';
   styleUrl: './update-author.component.css'
 })
 export class UpdateAuthorComponent implements OnInit {
-  userForm!: FormGroup;
-  authorId: string = "";
+  userForm: FormGroup;
   imageBase64: string | null = null; // Store the Base64 string of the image
-
-  // Dynamic field definitions
-  fields = [
-    {
-      key: 'name',
-      label: 'Name',
-      type: 'text',
-      placeholder: 'Enter your name',
-      validators: [Validators.required, Validators.minLength(3)],
-      errors: [
-        { key: 'required', message: 'Name is required' },
-        { key: 'minlength', message: 'Name must be at least 3 characters' },
-      ],
-    },
-    {
-      key: 'dob',
-      label: 'Date of Birth',
-      type: 'date',
-      placeholder: '',
-      validators: [Validators.required],
-      errors: [{ key: 'required', message: 'Date of Birth is required' }],
-    },
-    {
-      key: 'gender',
-      label: 'Gender',
-      type: 'select',
-      options: ['Female', 'Male', 'Other'],
-      validators: [Validators.required],
-      errors: [{ key: 'required', message: 'Gender is required' }],
-    },
-    // {
-    //   key: 'image',
-    //   label: 'Profile Image',
-    //   type: 'file',
-    //   placeholder: '',
-    //   validators: [this.imageFileValidator()],
-    //   errors: [
-    //     { key: 'invalidFileType', message: 'Only .jpg and .jpeg files are allowed' },
-    //   ],
-    // },
-    {
-      key: 'email',
-      label: 'Email',
-      type: 'email',
-      placeholder: 'Enter your email',
-      validators: [Validators.required, Validators.email],
-      errors: [
-        { key: 'required', message: 'Email is required' },
-        { key: 'email', message: 'Invalid email format' },
-      ],
-    },
-    {
-      key: 'mobile',
-      label: 'Mobile Number',
-      type: 'tel',
-      placeholder: 'Enter your mobile number',
-      validators: [Validators.required, Validators.pattern('^[0-9]{10}$')],
-      errors: [
-        { key: 'required', message: 'Mobile number is required' },
-        { key: 'pattern', message: 'Mobile number must be 10 digits' },
-      ],
-    },
-    {
-      key: 'bio',
-      label: 'Bio',
-      type: 'textarea',
-      placeholder: 'Write about yourself',
-      validators: [],
-      errors: [],
-    },
-    {
-      key: 'addressLine1',
-      label: 'Address Line 1',
-      type: 'text',
-      placeholder: 'Enter address line 1',
-      validators: [Validators.required],
-      errors: [{ key: 'required', message: 'Address Line 1 is required' }],
-    },
-    {
-      key: 'addressLine2',
-      label: 'Address Line 2',
-      type: 'text',
-      placeholder: 'Enter address line 2',
-      validators: [Validators.required],
-      errors: [{ key: 'required', message: 'Address Line 2 is required' }],
-    },
-    {
-      key: 'city',
-      label: 'City',
-      type: 'text',
-      placeholder: 'Enter city',
-      validators: [Validators.required],
-      errors: [{ key: 'required', message: 'City is required' }],
-    },
-    {
-      key: 'state',
-      label: 'State',
-      type: 'select',
-      options: ['Andaman and Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chandigarh', 'Chhattisgarh', 'Dadra and Nagar Haveli and Daman and Diu', 'Delhi', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jammu & Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Ladakh', 'Lakshadweep', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'],
-      validators: [Validators.required],
-      errors: [{ key: 'required', message: 'State is required' }],
-    },
-    {
-      key: 'pincode',
-      label: 'Pincode',
-      type: 'text',
-      placeholder: 'Enter pincode',
-      validators: [Validators.required, Validators.pattern('^[0-9]{6}$')],
-      errors: [
-        { key: 'required', message: 'Pincode is required' },
-        { key: 'pattern', message: 'Pincode must be 6 digits' },
-      ],
-    },
-    {
-      key: 'bankName',
-      label: 'Bank Name',
-      type: 'text',
-      placeholder: 'Enter bank name',
-      validators: [Validators.required],
-      errors: [{ key: 'required', message: 'Bank name is required' }],
-    },
-    {
-      key: 'bankAccountHolder',
-      label: 'Bank Account Holder',
-      type: 'text',
-      placeholder: 'Enter Bank Account Holder',
-      validators: [Validators.required],
-      errors: [{ key: 'required', message: 'Bank Account Holder is required' }],
-    },
-    {
-      key: 'bankAccountType',
-      label: 'Bank Account Type',
-      type: 'text',
-      placeholder: 'Enter Bank Account Type',
-      validators: [Validators.required],
-      errors: [{ key: 'required', message: 'Bank Account Type is required' }],
-    },
-    {
-      key: 'bankAccountNumber',
-      label: 'Bank Account Number',
-      type: 'text',
-      placeholder: 'Enter account number',
-      validators: [Validators.required, Validators.pattern('^[0-9]{9,18}$')],
-      errors: [
-        { key: 'required', message: 'Account number is required' },
-        { key: 'pattern', message: 'Account number must be 9-18 digits' },
-      ],
-    },
-    {
-      key: 'bankIFSCCode',
-      label: 'IFSC Code',
-      type: 'text',
-      placeholder: 'Enter IFSC code',
-      validators: [Validators.required, Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')],
-      errors: [
-        { key: 'required', message: 'IFSC code is required' },
-        { key: 'pattern', message: 'Invalid IFSC code format' },
-      ],
-    },
-    {
-      key: 'facebookLink',
-      label: 'Facebook Link',
-      type: 'url',
-      placeholder: 'Enter your Facebook profile URL',
-      validators: [Validators.pattern('https?://.+')],
-      errors: [{ key: 'pattern', message: 'Enter a valid URL starting with http/https' }],
-    },
-    {
-      key: 'instagramLink',
-      label: 'Instagram Link',
-      type: 'url',
-      placeholder: 'Enter your Instagram profile URL',
-      validators: [Validators.pattern('https?://.+')],
-      errors: [{ key: 'pattern', message: 'Enter a valid URL starting with http/https' }],
-    },
-    {
-      key: 'youtubeLink',
-      label: 'YouTube Link',
-      type: 'url',
-      placeholder: 'Enter your YouTube channel URL',
-      validators: [],
-      errors: [],
-    },
-    {
-      key: 'twitterLink',
-      label: 'Twitter Link',
-      type: 'url',
-      placeholder: 'Enter your Twitter profile URL',
-      validators: [],
-      errors: [],
-    },
-    {
-      key: 'personalBlogLink',
-      label: 'Personal Blog Link',
-      type: 'url',
-      placeholder: 'Enter your personal blog URL',
-      validators: [],
-      errors: [],
-    }
+  authorId: string = ''; // To store the author ID
+  states = [
+    'Andaman and Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar',
+    'Chandigarh', 'Chhattisgarh', 'Dadra and Nagar Haveli and Daman and Diu', 'Delhi', 'Goa',
+    'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jammu & Kashmir', 'Jharkhand', 'Karnataka',
+    'Kerala', 'Ladakh', 'Lakshadweep', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya',
+    'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu',
+    'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal',
   ];
-  
+
 
   constructor(
     private fb: FormBuilder,
+    private webapi: ApiService,
     private route: ActivatedRoute,
-    private router: Router,
-    private webapi: ApiService
-  ) { }
+    private router: Router
+  ) {
+    this.userForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      dob: ['', Validators.required],
+      gender: ['', Validators.required],
+      image: [''],
+      email: ['', [Validators.required, Validators.email]],
+      mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      bio: ['', Validators.required],
+      addressLine1: ['', Validators.required],
+      addressLine2: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      pincode: ['', [Validators.required, Validators.pattern('^[0-9]{6}$')]],
+      bankName: ['', Validators.required],
+      bankAccountHolder: ['', Validators.required],
+      bankAccountType: ['', Validators.required],
+      bankAccountNumber: ['', [Validators.required, Validators.pattern('^[0-9]{9,18}$')]],
+      bankIFSCCode: ['', [Validators.required, Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')]],
+      facebookLink: ['', [Validators.pattern('https?://.+')]],
+      instagramLink: ['', [Validators.pattern('https?://.+')]],
+      youtubeLink: ['', [Validators.pattern('https?://.+')]],
+      twitterLink: ['', [Validators.pattern('https?://.+')]],
+      personalBlogLink: ['', [Validators.pattern('https?://.+')]],
+    });
+  }
 
   ngOnInit(): void {
     this.authorId = this.webapi.getAuthorId();
+    if (this.authorId) {
+      this.loadAuthorData();
+    }
+  }
 
-    console.log(this.authorId);
-    this.userForm = this.fb.group({});
+  // Load author data to prefill the form
+  loadAuthorData() {
+    this.webapi.getAuthorDetailsById(this.authorId).subscribe(
+      (data: any) => {
+        if (data && data.result) {
+          const author = data.result;
 
-    // Explicitly define the type for the group object
-    const group: { [key: string]: any } = {};
+          // Format the date to yyyy-MM-dd
+          if (author.dob) {
+            author.dob = new Date(author.dob).toISOString().split('T')[0];
+          }
 
-    // Dynamically create form controls based on field definitions
-    this.fields.forEach(field => {
-      const validators = field.errors
-        ?.map(error => this.getValidatorByKey(error.key))
-        .filter(validator => validator !== null) || [];
-    
-      this.userForm.addControl(field.key, this.fb.control('', validators));
-    });
-    
-    // Fetch existing author data
-    this.webapi.getAuthorDetailsById(this.authorId).subscribe(data => {
-      console.log(data);
-      this.userForm.patchValue(data.result);
-    });
+          this.userForm.patchValue(author);
+          this.imageBase64 = author.image; // Load existing image
+        } else {
+          Swal.fire('Error', 'Author not found', 'error');
+          this.router.navigate(['/authors']);
+        }
+      },
+      (error) => {
+        console.error('Error loading author data:', error);
+        Swal.fire('Error', 'Failed to load author data', 'error');
+      }
+    );
   }
 
   get f() {
     return this.userForm.controls;
   }
 
-  onFileChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
-      //this.userForm.patchValue({ image: file });
+  // Handle image file change
+  onFileChange(event: Event) {
+    const file = (event.target as HTMLInputElement)?.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imageBase64 = reader.result as string; // Store the Base64 string
+      };
+      reader.onerror = (error) => {
+        console.error('Error converting image to Base64:', error);
+      };
+      reader.readAsDataURL(file); // Convert the file to Base64
     }
   }
 
@@ -289,17 +138,4 @@ export class UpdateAuthorComponent implements OnInit {
       // });
     }
   }
-
-  getValidatorByKey(key: string): any {
-    const validatorMap: { [key: string]: any } = {
-      required: Validators.required,
-      minLength: Validators.minLength(3),
-      maxLength: Validators.maxLength(255),
-      email: Validators.email,
-      pattern: Validators.pattern('[a-zA-Z ]*'),
-      // Add other validators here as needed
-    };
-  
-    return validatorMap[key] || null;
-  }  
 }

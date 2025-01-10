@@ -1,37 +1,283 @@
 <div class="container py-5">
     <h2 class="text-center">Update Author</h2>
+    <hr>
     <div class="container mt-4">
         <form [formGroup]="userForm" (ngSubmit)="onUpdate()" class="row g-3">
-            <!-- Loop for fields -->
-            <ng-container *ngFor="let field of fields">
-                <div class="col-md-6"
-                    [ngClass]="{ 'has-error': f[field.key].invalid && (f[field.key].touched || f[field.key].dirty) }">
-                    <label [for]="field.key" class="form-label">{{ field.label }}</label>
-                    <!-- Input types -->
-                    <input *ngIf="field.type !== 'textarea' && field.type !== 'select'" [type]="field.type"
-                        [id]="field.key" class="form-control" [formControlName]="field.key"
-                        [placeholder]="field.placeholder" [accept]="field.type === 'file' ? 'image/*' : null" (change)="onFileChange($event)"/>
-                    <!-- Textarea -->
-                    <textarea *ngIf="field.type === 'textarea'" [id]="field.key" class="form-control"
-                        [formControlName]="field.key" [placeholder]="field.placeholder" rows="4"></textarea>
-                    <!-- Select -->
-                    <select *ngIf="field.type === 'select'" [id]="field.key" class="form-select"
-                        [formControlName]="field.key">
-                        <option *ngFor="let option of field.options" [value]="option">{{ option }}</option>
-                    </select>
-                    <!-- Validation Errors -->
-                    <div *ngIf="f[field.key].invalid && (f[field.key].touched || f[field.key].dirty)"
-                        class="text-danger mt-1">
-                        <small *ngFor="let error of field.errors">
-                            <ng-container *ngIf="f[field.key].hasError(error.key)">{{ error.message }}</ng-container>
-                        </small>
-                    </div>
+            <div class="col-md-12">
+                <strong>Author Details:</strong>
+            </div>
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['name'].invalid && (f['name'].touched || f['name'].dirty) }">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" id="name" class="form-control" formControlName="name"
+                    placeholder="Enter your name" />
+                <div *ngIf="f['name'].invalid && (f['name'].touched || f['name'].dirty)" class="text-danger mt-1">
+                    <small *ngIf="f['name'].hasError('required')">Name is required</small>
+                    <small *ngIf="f['name'].hasError('minlength')">Name must be at least 3 characters</small>
                 </div>
-            </ng-container>
+            </div>
 
-            <!-- Update Button -->
-            <div class="col-12 text-center">
-                <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Update</button>
+            <div class="col-md-6" [ngClass]="{ 'has-error': f['dob'].invalid && (f['dob'].touched || f['dob'].dirty) }">
+                <label for="dob" class="form-label">Date of Birth</label>
+                <input type="date" id="dob" class="form-control" formControlName="dob" />
+                <div *ngIf="f['dob'].invalid && (f['dob'].touched || f['dob'].dirty)" class="text-danger mt-1">
+                    <small *ngIf="f['dob'].hasError('required')">Date of Birth is required</small>
+                </div>
+            </div>
+
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['gender'].invalid && (f['gender'].touched || f['gender'].dirty) }">
+                <label for="gender" class="form-label">Gender</label>
+                <select id="gender" class="form-select" formControlName="gender">
+                    <option value="" disabled>Select your gender</option>
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Other">Other</option>
+                </select>
+                <div *ngIf="f['gender'].invalid && (f['gender'].touched || f['gender'].dirty)" class="text-danger mt-1">
+                    <small *ngIf="f['gender'].hasError('required')">Gender is required</small>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['image'].invalid && (f['image'].touched || f['image'].dirty) }">
+                <label for="image" class="form-label">Profile Image</label>
+                <input type="file" id="image" class="form-control" formControlName="image" accept=".jpg, .jpeg"
+                    (change)="onFileChange($event)" />
+                <div *ngIf="f['image'].invalid && (f['image'].touched || f['image'].dirty)" class="text-danger mt-1">
+                    <small *ngIf="f['image'].hasError('invalidFileType')">Only .jpg and .jpeg files are allowed</small>
+                </div>
+            </div> -->
+
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['email'].invalid && (f['email'].touched || f['email'].dirty) }">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" class="form-control" formControlName="email"
+                    placeholder="Enter your email" />
+                <div *ngIf="f['email'].invalid && (f['email'].touched || f['email'].dirty)" class="text-danger mt-1">
+                    <small *ngIf="f['email'].hasError('required')">Email is required</small>
+                    <small *ngIf="f['email'].hasError('email')">Invalid email format</small>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['password'].invalid && (f['password'].touched || f['password'].dirty) }">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" class="form-control" formControlName="password"
+                    placeholder="Enter your password" />
+                <div *ngIf="f['password'].invalid && (f['password'].touched || f['password'].dirty)"
+                    class="text-danger mt-1">
+                    <small *ngIf="f['password'].hasError('required')">Password is required</small>
+                    <small *ngIf="f['password'].hasError('minlength')">Password must be at least 6 characters</small>
+                </div>
+            </div> -->
+
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['mobile'].invalid && (f['mobile'].touched || f['mobile'].dirty) }">
+                <label for="mobile" class="form-label">Mobile Number</label>
+                <input type="tel" id="mobile" class="form-control" formControlName="mobile"
+                    placeholder="Enter your mobile number" />
+                <div *ngIf="f['mobile'].invalid && (f['mobile'].touched || f['mobile'].dirty)" class="text-danger mt-1">
+                    <small *ngIf="f['mobile'].hasError('required')">Mobile number is required</small>
+                    <small *ngIf="f['mobile'].hasError('pattern')">Mobile number must be 10 digits</small>
+                </div>
+            </div>
+
+            <div class="col-md-6" [ngClass]="{ 'has-error': f['bio'].invalid && (f['bio'].touched || f['bio'].dirty) }">
+                <label for="bio" class="form-label">Bio</label>
+                <textarea id="bio" class="form-control" formControlName="bio" placeholder="Write about yourself"
+                    rows="4"></textarea>
+                <div *ngIf="f['bio'].invalid && (f['bio'].touched || f['bio'].dirty)" class="text-danger mt-1">
+                    <small *ngIf="f['bio'].hasError('required')">Bio is required</small>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <strong>Address Details:</strong>
+            </div>
+
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['addressLine1'].invalid && (f['addressLine1'].touched || f['addressLine1'].dirty) }">
+                <label for="addressLine1" class="form-label">Address Line 1</label>
+                <input type="text" id="addressLine1" class="form-control" formControlName="addressLine1"
+                    placeholder="Enter address line 1" />
+                <div *ngIf="f['addressLine1'].invalid && (f['addressLine1'].touched || f['addressLine1'].dirty)"
+                    class="text-danger mt-1">
+                    <small *ngIf="f['addressLine1'].hasError('required')">Address Line 1 is required</small>
+                </div>
+            </div>
+
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['addressLine2'].invalid && (f['addressLine2'].touched || f['addressLine2'].dirty) }">
+                <label for="addressLine2" class="form-label">Address Line 2</label>
+                <input type="text" id="addressLine2" class="form-control" formControlName="addressLine2"
+                    placeholder="Enter address line 2" />
+                <div *ngIf="f['addressLine2'].invalid && (f['addressLine2'].touched || f['addressLine2'].dirty)"
+                    class="text-danger mt-1">
+                    <small *ngIf="f['addressLine2'].hasError('required')">Address Line 2 is required</small>
+                </div>
+            </div>
+
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['city'].invalid && (f['city'].touched || f['city'].dirty) }">
+                <label for="city" class="form-label">City</label>
+                <input type="text" id="city" class="form-control" formControlName="city" placeholder="Enter city" />
+                <div *ngIf="f['city'].invalid && (f['city'].touched || f['city'].dirty)" class="text-danger mt-1">
+                    <small *ngIf="f['city'].hasError('required')">City is required</small>
+                </div>
+            </div>
+
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['state'].invalid && (f['state'].touched || f['state'].dirty) }">
+                <label for="state" class="form-label">State</label>
+                <select id="state" class="form-select" formControlName="state">
+                    <option value="" disabled>Select state</option>
+                    <option *ngFor="let state of states" [value]="state">{{ state }}</option>
+                </select>
+                <div *ngIf="f['state'].invalid && (f['state'].touched || f['state'].dirty)" class="text-danger mt-1">
+                    <small *ngIf="f['state'].hasError('required')">State is required</small>
+                </div>
+            </div>
+
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['pincode'].invalid && (f['pincode'].touched || f['pincode'].dirty) }">
+                <label for="pincode" class="form-label">Pincode</label>
+                <input type="text" id="pincode" class="form-control" formControlName="pincode"
+                    placeholder="Enter pincode" />
+                <div *ngIf="f['pincode'].invalid && (f['pincode'].touched || f['pincode'].dirty)"
+                    class="text-danger mt-1">
+                    <small *ngIf="f['pincode'].hasError('required')">Pincode is required</small>
+                    <small *ngIf="f['pincode'].hasError('pattern')">Pincode must be 6 digits</small>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <strong>Bank Details:</strong>
+            </div>
+
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['bankName'].invalid && (f['bankName'].touched || f['bankName'].dirty) }">
+                <label for="bankName" class="form-label">Bank Name</label>
+                <input type="text" id="bankName" class="form-control" formControlName="bankName"
+                    placeholder="Enter Bank Name" />
+                <div *ngIf="f['bankName'].invalid && (f['bankName'].touched || f['bankName'].dirty)"
+                    class="text-danger mt-1">
+                    <small *ngIf="f['bankName'].hasError('required')">Bank Name is required</small>
+                </div>
+            </div>
+
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['bankAccountType'].invalid && (f['bankAccountType'].touched || f['bankAccountType'].dirty) }">
+                <label for="bankAccountType" class="form-label">Bank Account Type</label>
+                <select id="bankAccountType" class="form-select" formControlName="bankAccountType">
+                    <option value="" disabled>Select Account Type</option>
+                    <option value="Savings">Savings</option>
+                    <option value="Current">Current</option>
+                    <option value="Other">Other</option>
+                </select>
+                <div *ngIf="f['bankAccountType'].invalid && (f['bankAccountType'].touched || f['bankAccountType'].dirty)"
+                    class="text-danger mt-1">
+                    <small *ngIf="f['bankAccountType'].hasError('required')">Account Type is required</small>
+                </div>
+            </div>
+
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['bankAccountHolder'].invalid && (f['bankAccountHolder'].touched || f['bankAccountHolder'].dirty) }">
+                <label for="bankAccountHolder" class="form-label">Bank Account Holder</label>
+                <input type="text" id="bankAccountHolder" class="form-control" formControlName="bankAccountHolder"
+                    placeholder="Enter Bank Account Holder" />
+                <div *ngIf="f['bankAccountHolder'].invalid && (f['bankAccountHolder'].touched || f['bankAccountHolder'].dirty)"
+                    class="text-danger mt-1">
+                    <small *ngIf="f['bankAccountHolder'].hasError('required')">Bank Account Holder is required</small>
+                </div>
+            </div>
+
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['bankAccountNumber'].invalid && (f['bankAccountNumber'].touched || f['bankAccountNumber'].dirty) }">
+                <label for="bankAccountNumber" class="form-label">Bank Account Number</label>
+                <input type="text" id="bankAccountNumber" class="form-control" formControlName="bankAccountNumber"
+                    placeholder="Enter Bank Account Number" />
+                <div *ngIf="f['bankAccountNumber'].invalid && (f['bankAccountNumber'].touched || f['bankAccountNumber'].dirty)"
+                    class="text-danger mt-1">
+                    <small *ngIf="f['bankAccountNumber'].hasError('required')">Bank Account Number is required</small>
+                    <small *ngIf="f['bankAccountNumber'].hasError('pattern')">Bank Account Number must be 9-18
+                        digits</small>
+                </div>
+            </div>
+
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['bankIFSCCode'].invalid && (f['bankIFSCCode'].touched || f['bankIFSCCode'].dirty) }">
+                <label for="bankIFSCCode" class="form-label">Bank IFSC Code</label>
+                <input type="text" id="bankIFSCCode" class="form-control" formControlName="bankIFSCCode"
+                    placeholder="Enter Bank IFSC Code" />
+                <div *ngIf="f['bankIFSCCode'].invalid && (f['bankIFSCCode'].touched || f['bankIFSCCode'].dirty)"
+                    class="text-danger mt-1">
+                    <small *ngIf="f['bankIFSCCode'].hasError('required')">Bank IFSC Code is required</small>
+                    <small *ngIf="f['bankIFSCCode'].hasError('pattern')">Invalid IFSC code format</small>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <strong>Social Media Details:</strong>
+            </div>
+
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['facebookLink'].invalid && (f['facebookLink'].touched || f['facebookLink'].dirty) }">
+                <label for="facebookLink" class="form-label">Facebook Link</label>
+                <input type="text" id="facebookLink" class="form-control" formControlName="facebookLink"
+                    placeholder="Enter Facebook Link" />
+                <div *ngIf="f['facebookLink'].invalid && (f['facebookLink'].touched || f['facebookLink'].dirty)"
+                    class="text-danger mt-1">
+                    <small *ngIf="f['facebookLink'].hasError('pattern')">Enter a valid URL starting with http/https</small>
+                </div>
+            </div>
+
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['instagramLink'].invalid && (f['instagramLink'].touched || f['instagramLink'].dirty) }">
+                <label for="instagramLink" class="form-label">Instagram Link</label>
+                <input type="text" id="instagramLink" class="form-control" formControlName="instagramLink"
+                    placeholder="Enter Instagram Link" />
+                <div *ngIf="f['instagramLink'].invalid && (f['instagramLink'].touched || f['instagramLink'].dirty)"
+                    class="text-danger mt-1">
+                    <small *ngIf="f['instagramLink'].hasError('pattern')">Enter a valid URL starting with http/https</small>
+                </div>
+            </div>
+
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['youtubeLink'].invalid && (f['youtubeLink'].touched || f['youtubeLink'].dirty) }">
+                <label for="youtubeLink" class="form-label">Youtube Link</label>
+                <input type="text" id="youtubeLink" class="form-control" formControlName="youtubeLink"
+                    placeholder="Enter Youtube Link" />
+                <div *ngIf="f['youtubeLink'].invalid && (f['youtubeLink'].touched || f['youtubeLink'].dirty)"
+                    class="text-danger mt-1">
+                    <small *ngIf="f['youtubeLink'].hasError('pattern')">Enter a valid URL starting with http/https</small>
+                </div>
+            </div>
+
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['twitterLink'].invalid && (f['twitterLink'].touched || f['twitterLink'].dirty) }">
+                <label for="twitterLink" class="form-label">Twitter (X) Link</label>
+                <input type="text" id="twitterLink" class="form-control" formControlName="twitterLink"
+                    placeholder="Enter Twitter (X) Link" />
+                <div *ngIf="f['twitterLink'].invalid && (f['twitterLink'].touched || f['twitterLink'].dirty)"
+                    class="text-danger mt-1">
+                    <small *ngIf="f['twitterLink'].hasError('pattern')">Enter a valid URL starting with http/https</small>
+                </div>
+            </div>
+
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['personalBlogLink'].invalid && (f['personalBlogLink'].touched || f['personalBlogLink'].dirty) }">
+                <label for="personalBlogLink" class="form-label">Personal Blog Link</label>
+                <input type="text" id="personalBlogLink" class="form-control" formControlName="personalBlogLink"
+                    placeholder="Enter Personal Blog Link" />
+                <div *ngIf="f['personalBlogLink'].invalid && (f['personalBlogLink'].touched || f['personalBlogLink'].dirty)"
+                    class="text-danger mt-1">
+                    <small *ngIf="f['personalBlogLink'].hasError('pattern')">Enter a valid URL starting with http/https</small>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary" [disabled]="f['invalid']">Submit</button>
             </div>
         </form>
     </div>
