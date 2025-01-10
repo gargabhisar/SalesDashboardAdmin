@@ -78,7 +78,9 @@ export class UpdateAuthorComponent implements OnInit {
           }
 
           this.userForm.patchValue(author);
-          this.imageBase64 = author.image; // Load existing image
+
+          // Set the existing image (Base64 or URL) for preview
+          this.imageBase64 = author.image; // Use for preview purposes
         } else {
           Swal.fire('Error', 'Author not found', 'error');
           this.router.navigate(['/authors']);
@@ -125,17 +127,34 @@ export class UpdateAuthorComponent implements OnInit {
     };
   }
 
-  onUpdate(): void {
+  onUpdate() {
     if (this.userForm.valid) {
-      const formData = new FormData();
-      Object.keys(this.userForm.value).forEach(key => {
-        formData.append(key, this.userForm.value[key]);
-      });
-      console.log(formData);
-      // this.authorService.updateAuthor(this.authorId, formData).subscribe({
-      //   next: () => this.router.navigate(['/authors']),
-      //   error: err => console.error('Update failed', err)
+      const formData = { ...this.userForm.value };
+      
+      formData.image = this.imageBase64; // Include the Base64 image data
+  
+      console.log('Form Data:', formData); // Debug log
+      // this.webapi.updateAuthor(formData).subscribe((data: any) => {
+      //   if (data.statusCode === 400) {
+      //     Swal.fire({
+      //       title: data.validation[0].title,
+      //       text: data.validation[0].details,
+      //       icon: 'error',
+      //       confirmButtonText: 'Ok',
+      //     });
+      //   } else {
+      //     this.userForm.reset();
+      //     this.imageBase64 = null;
+      //     Swal.fire({
+      //       title: data.message,
+      //       icon: 'success',
+      //     });
+      //   }
       // });
+    } else {
+      console.log('Form is invalid. Please check the highlighted fields.');
+      this.userForm.markAllAsTouched(); // Mark all fields as touched for validation feedback
     }
   }
+  
 }
