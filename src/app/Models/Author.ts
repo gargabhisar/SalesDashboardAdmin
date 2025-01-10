@@ -32,5 +32,6 @@ export interface Author {
     gender: string;
     image: string;
     email: string;
-    mobile: string;    
+    mobile: string;
+    profilePercentage: number; 
   }

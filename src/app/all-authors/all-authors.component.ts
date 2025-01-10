@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ApiService } from '../services/api.service';
 import Swal from 'sweetalert2';
 import { AuthorDetails } from '../Models/Author';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-authors',
@@ -15,7 +16,7 @@ export class AllAuthorsComponent {
 
   authorDetails: Array<AuthorDetails> = [];
 
-  constructor(private webapi: ApiService) {
+  constructor(private webapi: ApiService, private router: Router) {
     this.webapi.getAllAuthorDetails().subscribe({
       next: (data: any) => {
         if (data.statusCode == 400) {
@@ -33,5 +34,10 @@ export class AllAuthorsComponent {
         }
       }
     });
+  }
+
+  updateAuthor(authorId: string) {
+    this.webapi.setAuthorId(authorId);
+    this.router.navigate(['/updateAuthor'], { skipLocationChange: true });
   }
 }

@@ -8,7 +8,7 @@ import { Author } from '../Models/Author';
 })
 export class ApiService {
 
-  private data: any = null;
+  private authorId: any = null;
   private base_url = "https://localhost:7203/";
   private publisherLogin_url = "Login/PublisherLogin";
   private addAuthor_url = "Author/AddAuthor";
@@ -34,16 +34,16 @@ export class ApiService {
     return obs;
   }
 
-  setData(value: any) {
-    this.data = value;
+  setAuthorId(value: any) {
+    this.authorId = value;
   }
 
-  getData() {
-    return this.data;
+  getAuthorId() {
+    return this.authorId;
   }
 
   clearData() {
-    this.data = null;
+    this.authorId = null;
   }
 
   getDashboardDetails() {

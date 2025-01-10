@@ -10,6 +10,7 @@
                     <th scope="col">Gender</th>
                     <th scope="col">Email</th>
                     <th scope="col">Mobile</th>
+                    <th scope="col">Profile Completion</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -22,8 +23,9 @@
                     <td>{{ author.gender }}</td>
                     <td>{{ author.email }}</td>
                     <td>{{ author.mobile }}</td>
+                    <td>{{ author.profilePercentage }}%</td>
                     <td>
-                        <button type="button" class="btn btn-primary">View</button>
+                        <button type="button" class="btn btn-primary" (click)="updateAuthor(author.authorId)">Update</button>
                     </td>
                 </tr>
             </tbody>
@@ -43,7 +45,8 @@
                         <strong>DOB:</strong> {{ author.dob }}<br />
                         <strong>Gender:</strong> {{ author.gender }} <br />
                         <strong>Email:</strong> {{ author.email }}<br />
-                        <strong>Mobile:</strong> {{ author.mobile }}
+                        <strong>Mobile:</strong> {{ author.mobile }}<br />
+                        <strong>Profile Completion:</strong> {{ author.profilePercentage }}%
                     </p>
                     <hr>
                     <button type="button" class="btn btn-primary btn-sm">View</button>
