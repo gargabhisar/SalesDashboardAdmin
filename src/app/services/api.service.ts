@@ -12,7 +12,7 @@ export class ApiService {
   private base_url = "https://localhost:7203/";
   private publisherLogin_url = "Login/PublisherLogin";
   private addAuthor_url = "Author/AddAuthor";
-
+  private updateAuthor_url = "Author/UpdateAuthor";
 
   private getAllAuthors_url = "Author/GetAllAuthors";
   private getAllAuthorDetails_url = "Author/GetAllAuthorDetails";
@@ -71,6 +71,11 @@ export class ApiService {
 
   getAuthorDetailsById(authorID: string) {
     let obs = this.http.get<any>(this.base_url + this.getAuthorDetailsById_url + "?authorId=" + authorID);
+    return obs;
+  }
+
+  updateAuthor(author: any) {
+    let obs = this.http.post(this.base_url + this.updateAuthor_url, author);
     return obs;
   }
 }

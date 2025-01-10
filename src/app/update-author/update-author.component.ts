@@ -130,31 +130,32 @@ export class UpdateAuthorComponent implements OnInit {
   onUpdate() {
     if (this.userForm.valid) {
       const formData = { ...this.userForm.value };
-      
+
       formData.image = this.imageBase64; // Include the Base64 image data
-  
-      console.log('Form Data:', formData); // Debug log
-      // this.webapi.updateAuthor(formData).subscribe((data: any) => {
-      //   if (data.statusCode === 400) {
-      //     Swal.fire({
-      //       title: data.validation[0].title,
-      //       text: data.validation[0].details,
-      //       icon: 'error',
-      //       confirmButtonText: 'Ok',
-      //     });
-      //   } else {
-      //     this.userForm.reset();
-      //     this.imageBase64 = null;
-      //     Swal.fire({
-      //       title: data.message,
-      //       icon: 'success',
-      //     });
-      //   }
-      // });
+      formData.password = "";
+      formData.authorId = this.authorId;
+
+      this.webapi.updateAuthor(formData).subscribe((data: any) => {
+        if (data.statusCode === 400) {
+          Swal.fire({
+            title: data.validation[0].title,
+            text: data.validation[0].details,
+            icon: 'error',
+            confirmButtonText: 'Ok',
+          });
+        } else {
+          this.userForm.reset();
+          this.imageBase64 = null;
+          Swal.fire({
+            title: data.message,
+            icon: 'success',
+          });
+        }
+      });
     } else {
       console.log('Form is invalid. Please check the highlighted fields.');
       this.userForm.markAllAsTouched(); // Mark all fields as touched for validation feedback
     }
   }
-  
+
 }
