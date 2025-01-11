@@ -63,7 +63,7 @@ export class AddBookComponent implements OnInit {
       description: ['', Validators.required],
       authorid: ['', Validators.required]
     });
-  }  
+  }
 
   // Access form controls for validation
   get f() {
@@ -75,7 +75,26 @@ export class AddBookComponent implements OnInit {
     if (this.userForm.valid) {
       const formData = { ...this.userForm.value };
       formData.image = this.imageBase64;
-      console.log(formData);
+
+      let addBook = this.webapi.addBook(formData);
+      addBook.subscribe((data: any) => {
+        if (data.statusCode == 400) {
+          Swal.fire({
+            title: data.validation[0].title,
+            text: data.validation[0].details,
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          });
+        }
+        else {
+          this.userForm.reset();
+          this.imageBase64 = null;
+          Swal.fire({
+            title: data.message,
+            icon: "success"
+          });
+        }
+      })
     } else {
       console.log('Form is invalid. Please check the highlighted fields.');
       this.userForm.markAllAsTouched();

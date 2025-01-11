@@ -36,12 +36,27 @@
                 </ul>
             </li>
 
-            <!-- Add Book -->
+            <!-- Books Menu -->
             <li class="nav-item">
-                <a routerLink="/addBook" routerLinkActive="active" (click)="toggleSidebar()" class="nav-link"
-                    ariaCurrentWhenActive="page">
-                    <i class="fa fa-book" aria-hidden="true"></i> Add Book
+                <a href="javascript:void(0);" (click)="toggleSubMenu('books')" class="nav-link">
+                    <i class="fa fa-user" aria-hidden="true"></i> Books
+                    <i [class]="isSubMenuOpen('books') ? 'fa fa-chevron-down' : 'fa fa-chevron-right'"
+                        aria-hidden="true"></i>
                 </a>
+                <ul *ngIf="isSubMenuOpen('books')" class="submenu">
+                    <li>
+                        <a routerLink="/addBook" (click)="toggleSidebar()" routerLinkActive="active" class="nav-link"
+                            ariaCurrentWhenActive="page">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Add Book
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/allBooks" (click)="toggleSidebar()" routerLinkActive="active" class="nav-link"
+                            ariaCurrentWhenActive="page">
+                            <i class="fa fa-list" aria-hidden="true"></i> All Books
+                        </a>
+                    </li>
+                </ul>
             </li>
         </ul>
         <hr>
