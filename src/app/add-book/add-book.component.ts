@@ -18,103 +18,8 @@ export class AddBookComponent implements OnInit {
   authors: Array<Author> | null = null;
   authorNames: Array<{ id: string, name: string }> = [];
 
-  fields = [
-    {
-      key: 'title',
-      label: 'Title',
-      type: 'text',
-      placeholder: 'Enter Title',
-      validators: [Validators.required, Validators.minLength(1)],
-      errors: [
-        { key: 'required', message: 'Title is required' },
-        { key: 'minlength', message: 'Title must be at least 1 characters' },
-      ],
-    },
-    {
-      key: 'isbn',
-      label: 'ISBN',
-      type: 'text',
-      placeholder: 'Enter ISBN',
-      validators: [Validators.required, Validators.pattern('^[0-9]{13}$')],
-      errors: [
-        { key: 'required', message: 'ISBN is required' },
-        { key: 'pattern', message: 'ISBN must be 13 digits' },
-      ],
-    },
-    {
-      key: 'size',
-      label: 'Size',
-      type: 'select',
-      options: [
-        { id: '5x8', name: '5x8' },
-        { id: '5.5x8.5', name: '5.5x8.5' },
-        { id: '6x9', name: '6x9' },
-        { id: '8.5x11', name: '8.5x11' },
-        { id: 'Pocket Book', name: 'Pocket Book' }
-      ] as { id: string; name: string }[],
-      validators: [Validators.required],
-      errors: [{ key: 'required', message: 'Size is required' }],
-    },
-    {
-      key: 'pages',
-      label: 'Pages',
-      type: 'text',
-      placeholder: 'Enter Pages',
-      validators: [Validators.required, Validators.minLength(1), Validators.maxLength(3)],
-      errors: [
-        { key: 'required', message: 'Pages is required' },
-        { key: 'minLength', message: 'Pages must be greater than 0' },
-        { key: 'maxLength', message: 'Pages must be less than 999' }
-      ],
-    },
-    {
-      key: 'pricePaperback',
-      label: 'Price (Paperback)',
-      type: 'text',
-      placeholder: 'Enter Price of Paperback',
-      validators: [Validators.required, Validators.minLength(1)],
-      errors: [
-        { key: 'required', message: 'Price is required' },
-        { key: 'minLength', message: 'Price must be greater than 0' }
-      ],
-    },
-    {
-      key: 'priceKindle',
-      label: 'Price (Kindle)',
-      type: 'text',
-      placeholder: 'Enter Price of Kindle',
-      validators: [Validators.required, Validators.minLength(1)],
-      errors: [
-        { key: 'required', message: 'Price is required' },
-        { key: 'minLength', message: 'Price must be greater than 0' }
-      ],
-    },
-    {
-      key: 'image',
-      label: 'Book Image',
-      type: 'file',
-      placeholder: '',
-      validators: [this.imageFileValidator()],
-      errors: [
-        { key: 'invalidFileType', message: 'Only .jpg and .jpeg files are allowed' },
-      ],
-    },
-    {
-      key: 'description',
-      label: 'Description',
-      type: 'textarea',
-      placeholder: 'Book Blurb/Synopsis',
-      validators: [],
-      errors: [],
-    },
-    {
-      key: 'authorid',
-      label: 'Author',
-      type: 'select',
-      options: [] as { id: string; name: string }[],
-      validators: [Validators.required],
-      errors: [{ key: 'required', message: 'Author is required' }],
-    },
+  sizes = [
+    '5x8', '5.5x8.5', '6x9', '8.5x11', 'Pocket Book'
   ];
 
   ngOnInit(): void {
@@ -136,12 +41,6 @@ export class AddBookComponent implements OnInit {
               id: author.authorId, // Ensure the correct attribute names are used
               name: author.name,
             }));
-
-            // Update the options for the 'authorid' field
-            const authorField = this.fields.find((field) => field.key === 'authorid');
-            if (authorField) {
-              authorField.options = this.authorNames; // Assign the mapped author objects
-            }
           }
         }
       },
@@ -153,17 +52,18 @@ export class AddBookComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private webapi: ApiService,) {
 
-    // Explicitly define the type for the group object
-    const group: { [key: string]: any } = {};
-
-    // Dynamically create form controls based on field definitions
-    this.fields.forEach((field) => {
-      group[field.key] = ['', field.validators];
+    this.userForm = this.fb.group({
+      title: ['', [Validators.required]],
+      isbn: ['', [Validators.required, Validators.pattern('^[0-9]{13}$')]],
+      size: ['', Validators.required],
+      pages: ['', [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],
+      pricePaperback: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      priceKindle: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      image: ['', [this.imageFileValidator()]],
+      description: ['', Validators.required],
+      authorid: ['', Validators.required]
     });
-
-    // Initialize the form group with the dynamically created controls
-    this.userForm = this.fb.group(group);
-  }
+  }  
 
   // Access form controls for validation
   get f() {
