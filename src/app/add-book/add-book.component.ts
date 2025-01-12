@@ -96,7 +96,6 @@ export class AddBookComponent implements OnInit {
         }
       })
     } else {
-      console.log('Form is invalid. Please check the highlighted fields.');
       this.userForm.markAllAsTouched();
     }
   }

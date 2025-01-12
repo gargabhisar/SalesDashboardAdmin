@@ -83,7 +83,7 @@ export class UpdateAuthorComponent implements OnInit {
           this.imageBase64 = author.image; // Use for preview purposes
         } else {
           Swal.fire('Error', 'Author not found', 'error');
-          this.router.navigate(['/authors']);
+          this.router.navigate(['/allAuthors']);
         }
       },
       (error) => {
@@ -149,11 +149,12 @@ export class UpdateAuthorComponent implements OnInit {
           Swal.fire({
             title: data.message,
             icon: 'success',
-          });
+          }).then((result) => {
+            this.router.navigate(['/allAuthors']);
+          });;
         }
       });
     } else {
-      console.log('Form is invalid. Please check the highlighted fields.');
       this.userForm.markAllAsTouched(); // Mark all fields as touched for validation feedback
     }
   }

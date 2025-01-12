@@ -82,7 +82,6 @@ export class AddAuthorComponent {
         }
       })
     } else {
-      console.log('Form is invalid. Please check the highlighted fields.');
       this.userForm.markAllAsTouched();
     }
   }

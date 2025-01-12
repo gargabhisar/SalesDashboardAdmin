@@ -21,6 +21,7 @@ export class ApiService {
   private getAllAuthorDetails_url = "Author/GetAllAuthorDetails";
   private getAuthorDetailsById_url = "Author/AuthorDetailsById";
   private getDasboard_url = "Dashboard/AdminDashboardDetails";
+  private getAllBooks_url = "Books/GetAllBooks";
 
   constructor(private http: HttpClient) { }
 
@@ -84,6 +85,12 @@ export class ApiService {
 
   addBook(book: Book) {
     let obs = this.http.post(this.base_url + this.addBook_url, book);
+    return obs;
+  }
+
+  getAllBooks()
+  {
+    let obs = this.http.get<any>(this.base_url + this.getAllBooks_url);
     return obs;
   }
 }

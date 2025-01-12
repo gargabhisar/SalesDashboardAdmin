@@ -19,7 +19,7 @@
                     <td><img [src]="author.image" alt="{{ author.name }}" class="img-fluid rounded"
                             style="width: 50px; height: 50px;"></td>
                     <td>{{ author.name }}</td>
-                    <td>{{ author.dob }}</td>
+                    <td>{{ author.dob | date: 'MMMM d, y'}}</td>
                     <td>{{ author.gender }}</td>
                     <td>{{ author.email }}</td>
                     <td>{{ author.mobile }}</td>

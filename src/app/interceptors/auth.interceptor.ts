@@ -29,8 +29,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(clonedRequest).pipe(
     catchError((error) => {
-      // console.log('error is intercept')
-      // console.error(error);
       if (error instanceof HttpErrorResponse) {
         if (error.error instanceof ErrorEvent) {
           console.error("Error Event");
