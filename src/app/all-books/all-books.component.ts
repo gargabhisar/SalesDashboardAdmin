@@ -13,8 +13,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './all-books.component.css'
 })
 export class AllBooksComponent {
-
-  allBooks : Array<Book> = [];
+  
+  allBooks: Array<Book> = [];
 
   constructor(private webapi: ApiService, private router: Router) {
     this.webapi.getAllBooks().subscribe({
@@ -34,5 +34,10 @@ export class AllBooksComponent {
         }
       }
     });
+  }
+
+  updateBook(bookId: string) {
+    this.webapi.setBookId(bookId);
+    this.router.navigate(['/updateBook'], { skipLocationChange: true });
   }
 }

@@ -7,6 +7,7 @@ import { AddBookComponent } from './add-book/add-book.component';
 import { AllAuthorsComponent } from './all-authors/all-authors.component';
 import { UpdateAuthorComponent } from './update-author/update-author.component';
 import { AllBooksComponent } from './all-books/all-books.component';
+import { UpdateBookComponent } from './update-book/update-book.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent, pathMatch: 'full' },
@@ -19,7 +20,8 @@ export const routes: Routes = [
             { path: 'addBook', component: AddBookComponent },
             { path: 'allAuthors', component: AllAuthorsComponent },
             { path: 'updateAuthor', component: UpdateAuthorComponent },
-            { path: 'allBooks', component: AllBooksComponent }
+            { path: 'allBooks', component: AllBooksComponent },
+            { path: 'updateBook', component: UpdateBookComponent }
         ]
     }
 ];

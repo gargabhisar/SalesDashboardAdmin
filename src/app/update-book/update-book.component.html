@@ -1,0 +1,104 @@
+<div class="container py-5">
+    <h2 class="text-center">Update Author</h2>
+    <hr>
+    <div class="container mt-4">
+        <form [formGroup]="userForm" class="row g-3">
+            <div class="col-md-12">
+                <strong>Book Details:</strong>
+            </div>
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['title'].invalid && (f['title'].touched || f['title'].dirty) }">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" id="title" class="form-control" formControlName="title" placeholder="Enter Title" />
+                <div *ngIf="f['title'].invalid && (f['title'].touched || f['title'].dirty)" class="text-danger mt-1">
+                    <small *ngIf="f['title'].hasError('required')">Title is required</small>
+                    <small *ngIf="f['title'].hasError('minlength')">Title must be at least 1 characters</small>
+                </div>
+            </div>
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['isbn'].invalid && (f['isbn'].touched || f['isbn'].dirty) }">
+                <label for="isbn" class="form-label">ISBN</label>
+                <input type="text" id="isbn" class="form-control" formControlName="isbn" placeholder="Enter ISBN" />
+                <div *ngIf="f['isbn'].invalid && (f['isbn'].touched || f['isbn'].dirty)" class="text-danger mt-1">
+                    <small *ngIf="f['isbn'].hasError('required')">ISBN is required</small>
+                    <small *ngIf="f['isbn'].hasError('pattern')">ISBN must be 13 digits</small>
+                </div>
+            </div>
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['size'].invalid && (f['size'].touched || f['size'].dirty) }">
+                <label for="size" class="form-label">Size</label>
+                <select id="size" class="form-select" formControlName="size">
+                    <option value="" disabled>Select Size</option>
+                    <option *ngFor="let size of sizes" [value]="size">{{ size }}</option>
+                </select>
+                <div *ngIf="f['size'].invalid && (f['size'].touched || f['size'].dirty)" class="text-danger mt-1">
+                    <small *ngIf="f['size'].hasError('required')">Size is required</small>
+                </div>
+            </div>
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['pages'].invalid && (f['pages'].touched || f['pages'].dirty) }">
+                <label for="pages" class="form-label">Pages</label>
+                <input type="text" id="pages" class="form-control" formControlName="pages" placeholder="Enter Pages" />
+                <div *ngIf="f['pages'].invalid && (f['pages'].touched || f['pages'].dirty)" class="text-danger mt-1">
+                    <small *ngIf="f['pages'].hasError('required')">Pages are required</small>
+                    <small *ngIf="f['pages'].hasError('pattern')">Pages must be numeric and greater than 0</small>
+                </div>
+            </div>
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['pricePaperback'].invalid && (f['pricePaperback'].touched || f['pricePaperback'].dirty) }">
+                <label for="pricePaperback" class="form-label">Price (Paperback)</label>
+                <input type="text" id="pricePaperback" class="form-control" formControlName="pricePaperback"
+                    placeholder="Enter Pirce for Paperback" />
+                <div *ngIf="f['pricePaperback'].invalid && (f['pricePaperback'].touched || f['pricePaperback'].dirty)"
+                    class="text-danger mt-1">
+                    <small *ngIf="f['pricePaperback'].hasError('required')">Price is required</small>
+                    <small *ngIf="f['pricePaperback'].hasError('pattern')">Price must be numeric</small>
+                </div>
+            </div>
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['priceKindle'].invalid && (f['priceKindle'].touched || f['priceKindle'].dirty) }">
+                <label for="priceKindle" class="form-label">Price (Kindle)</label>
+                <input type="text" id="priceKindle" class="form-control" formControlName="priceKindle"
+                    placeholder="Enter Pirce for Kindle" />
+                <div *ngIf="f['priceKindle'].invalid && (f['priceKindle'].touched || f['priceKindle'].dirty)"
+                    class="text-danger mt-1">
+                    <small *ngIf="f['priceKindle'].hasError('required')">Price is required</small>
+                    <small *ngIf="f['priceKindle'].hasError('pattern')">Price must be numeric</small>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="image" class="form-label">Book Image</label>
+                <input type="file" id="image" class="form-control" (change)="onFileChange($event)">
+                <div *ngIf="imageBase64">
+                    <img [src]="imageBase64" alt="Author Image" style="max-width: 200px; max-height: 200px;" />
+                </div>
+            </div>
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['description'].invalid && (f['description'].touched || f['description'].dirty) }">
+                <label for="description" class="form-label">Description</label>
+                <textarea id="description" class="form-control" formControlName="description"
+                    placeholder="Blurb/Synopsis" rows="4"></textarea>
+                <div *ngIf="f['description'].invalid && (f['description'].touched || f['description'].dirty)"
+                    class="text-danger mt-1">
+                    <small *ngIf="f['description'].hasError('required')">Description is required</small>
+                </div>
+            </div>
+            <div class="col-md-6"
+                [ngClass]="{ 'has-error': f['authorid'].invalid && (f['authorid'].touched || f['authorid'].dirty) }">
+                <label for="authorid" class="form-label">Author</label>
+                <select id="authorid" class="form-select" formControlName="authorid">
+                    <option value="" disabled>Select Author</option>
+                    <option *ngFor="let author of authorNames" [value]="author.id">{{ author.name }}</option>
+                </select>
+                <div *ngIf="f['authorid'].invalid && (f['authorid'].touched || f['authorid'].dirty)"
+                    class="text-danger mt-1">
+                    <small *ngIf="f['authorid'].hasError('required')">Author is required</small>
+                </div>
+            </div>
+            <!-- Submit Button -->
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

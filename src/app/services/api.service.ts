@@ -9,6 +9,7 @@ import { Author } from '../Models/Author';
 export class ApiService {
 
   private authorId: any = null;
+  private bookId: any = null;
   private base_url = "https://localhost:7203/";
   private publisherLogin_url = "Login/PublisherLogin";
 
@@ -22,6 +23,7 @@ export class ApiService {
   private getAuthorDetailsById_url = "Author/AuthorDetailsById";
   private getDasboard_url = "Dashboard/AdminDashboardDetails";
   private getAllBooks_url = "Books/GetAllBooks";
+  private getBookDetailsByBookId_url = "Books/GetBookDetailsByBookId";  
 
   constructor(private http: HttpClient) { }
 
@@ -48,8 +50,17 @@ export class ApiService {
     return this.authorId;
   }
 
+  setBookId(value: any) {
+    this.bookId = value;
+  }
+
+  getBookId() {
+    return this.bookId;
+  }
+
   clearData() {
     this.authorId = null;
+    this.bookId = null;
   }
 
   getDashboardDetails() {
@@ -88,9 +99,13 @@ export class ApiService {
     return obs;
   }
 
-  getAllBooks()
-  {
+  getAllBooks() {
     let obs = this.http.get<any>(this.base_url + this.getAllBooks_url);
+    return obs;
+  }
+
+  getBookDetailsByBookId(bookId: string) {
+    let obs = this.http.get<any>(this.base_url + this.getBookDetailsByBookId_url + "?BookId=" + bookId);
     return obs;
   }
 }

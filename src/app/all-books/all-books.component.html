@@ -25,7 +25,7 @@
                     <td>{{ book.priceKindle }}</td>
                     <td>{{ book.description }}</td>
                     <td>
-                        <button type="button" class="btn btn-primary">View</button>
+                        <button type="button" class="btn btn-primary" (click)="updateBook(book.bookId)">View/Update</button>
                     </td>
                 </tr>
             </tbody>
@@ -47,7 +47,7 @@
                         <strong>Price (Kindle):</strong> {{ book.priceKindle }}<br />
                     </p>
                     <hr>
-                    <button type="button" class="btn btn-primary btn-sm">View</button>
+                    <button type="button" class="btn btn-primary btn-sm" (click)="updateBook(book.bookId)">View/Update</button>
                 </div>
             </div>
         </div>
