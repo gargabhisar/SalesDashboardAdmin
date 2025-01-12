@@ -3,11 +3,12 @@ import { ApiService } from '../services/api.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Book } from '../Models/Book';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-all-books',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './all-books.component.html',
   styleUrl: './all-books.component.css'
 })
@@ -16,7 +17,7 @@ export class AllBooksComponent {
   allBooks : Array<Book> = [];
 
   constructor(private webapi: ApiService, private router: Router) {
-    this.webapi.getAllAuthorDetails().subscribe({
+    this.webapi.getAllBooks().subscribe({
       next: (data: any) => {
         if (data.statusCode == 400) {
           Swal.fire({
@@ -28,7 +29,7 @@ export class AllBooksComponent {
         }
         else {
           this.allBooks = data.result;
-          // Sort the authorDetails array based on the 'name' property
+          // Sort the allBooks array based on the 'title' property
           this.allBooks.sort((a, b) => a.title.localeCompare(b.title));
         }
       }

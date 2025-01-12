@@ -1,7 +1,7 @@
 <div class="container table-responsive py-5">
     <h2 class="text-center">All Authors</h2>
     <div class="table-responsive d-none d-md-block" *ngIf="authorDetails.length > 0; else noData">
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr>
                     <th scope="col">Image</th>
@@ -17,7 +17,7 @@
             <tbody>
                 <tr *ngFor="let author of authorDetails;">
                     <td><img [src]="author.image" alt="{{ author.name }}" class="img-fluid rounded"
-                            style="width: 50px; height: 50px;"></td>
+                            style="width: 50px;"></td>
                     <td>{{ author.name }}</td>
                     <td>{{ author.dob | date: 'MMMM d, y'}}</td>
                     <td>{{ author.gender }}</td>
@@ -49,7 +49,7 @@
                         <strong>Profile Completion:</strong> {{ author.profilePercentage }}%
                     </p>
                     <hr>
-                    <button type="button" class="btn btn-primary btn-sm">View</button>
+                    <button type="button" class="btn btn-primary btn-sm" (click)="updateAuthor(author.authorId)">Update</button>
                 </div>
             </div>
         </div>
