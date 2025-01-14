@@ -58,6 +58,23 @@
                     </li>
                 </ul>
             </li>
+
+            <!-- Sales Menu -->
+            <li class="nav-item">
+                <a href="javascript:void(0);" (click)="toggleSubMenu('sales')" class="nav-link">
+                    <i class="fa fa-user" aria-hidden="true"></i> Sales
+                    <i [class]="isSubMenuOpen('sales') ? 'fa fa-chevron-down' : 'fa fa-chevron-right'"
+                        aria-hidden="true"></i>
+                </a>
+                <ul *ngIf="isSubMenuOpen('sales')" class="submenu">
+                    <li>
+                        <a routerLink="/booksales" (click)="toggleSidebar()" routerLinkActive="active" class="nav-link"
+                            ariaCurrentWhenActive="page">
+                            <i class="fa fa-list" aria-hidden="true"></i> All Sales
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
         <hr>
         <div class="user-details bottom-div">
