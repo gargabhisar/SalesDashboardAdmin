@@ -17,6 +17,7 @@ export class ApiService {
   private addBook_url = "Books/AddBook";
 
   private updateAuthor_url = "Author/UpdateAuthor";
+  private updateBook_url = "Books/UpdateBook";
 
   private getAllAuthors_url = "Author/GetAllAuthors";
   private getAllAuthorDetails_url = "Author/GetAllAuthorDetails";
@@ -106,6 +107,11 @@ export class ApiService {
 
   getBookDetailsByBookId(bookId: string) {
     let obs = this.http.get<any>(this.base_url + this.getBookDetailsByBookId_url + "?BookId=" + bookId);
+    return obs;
+  }
+
+  updateBook(formData: any) {
+    let obs = this.http.post(this.base_url + this.updateBook_url, formData);
     return obs;
   }
 }

@@ -2,7 +2,7 @@
     <h2 class="text-center">Update Author</h2>
     <hr>
     <div class="container mt-4">
-        <form [formGroup]="userForm" class="row g-3">
+        <form [formGroup]="userForm" (ngSubmit)="onUpdate()" class="row g-3">
             <div class="col-md-12">
                 <strong>Book Details:</strong>
             </div>

@@ -47,15 +47,13 @@ export class UpdateBookComponent implements OnInit {
       this.webapi.getAllAuthors().subscribe({
         next: (data: any) => {
           this.authors = data.result;
-          if(this.authors)
-          {
+          if (this.authors) {
             this.authorNames = this.authors.map((author) => ({
               id: author.authorId.toString(),
               name: author.name,
-            }));  
+            }));
           }
-          console.log(this.authorNames);
-          
+
           // Load book data after authors are populated
           this.loadBookData();
         },
@@ -77,14 +75,16 @@ export class UpdateBookComponent implements OnInit {
 
           // Set the existing image (Base64 or URL) for preview
           this.imageBase64 = book.image; // Use for preview purposes
+
+          // Setting the dropdown value for Author Dropdown
+          this.userForm.patchValue({ authorid: book.authorId });
         } else {
           Swal.fire('Error', 'Author not found', 'error');
           this.router.navigate(['/allAuthors']);
         }
       },
       (error) => {
-        console.error('Error loading author data:', error);
-        Swal.fire('Error', 'Failed to load author data', 'error');
+        Swal.fire('Error', 'Failed to load Book data', 'error');
       }
     );
   }
@@ -122,4 +122,35 @@ export class UpdateBookComponent implements OnInit {
       return null; // No error
     };
   }
+
+  onUpdate() {
+      if (this.userForm.valid) {
+        const formData = { ...this.userForm.value };
+  
+        formData.image = this.imageBase64; // Include the Base64 image data
+        formData.bookId = this.bookId;
+
+        this.webapi.updateBook(formData).subscribe((data: any) => {
+          if (data.statusCode === 400) {
+            Swal.fire({
+              title: data.validation[0].title,
+              text: data.validation[0].details,
+              icon: 'error',
+              confirmButtonText: 'Ok',
+            });
+          } else {
+            this.userForm.reset();
+            this.imageBase64 = null;
+            Swal.fire({
+              title: data.message,
+              icon: 'success',
+            }).then((result) => {
+              this.router.navigate(['/allBooks']);
+            });;
+          }
+        });
+      } else {
+        this.userForm.markAllAsTouched(); // Mark all fields as touched for validation feedback
+      }
+    }
 }
