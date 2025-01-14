@@ -424,8 +424,10 @@ export class BookSalesComponent {
   }
 
   getSortClass(key: string): string {
-    if (this.sortKey !== key) return '';
-    return this.sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down';
+    if (this.sortKey === key) {
+      return this.sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
+    }
+    return 'fa fa-arrow';
   }
 
   changePage(page: number) {

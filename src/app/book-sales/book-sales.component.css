@@ -1,0 +1,10 @@
+th {
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  th i {
+    margin-left: 5px;
+    font-size: 0.8rem;
+    color: #6c757d;
+  }
