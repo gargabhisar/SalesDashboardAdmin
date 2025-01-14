@@ -35,9 +35,3 @@ export interface Author {
     mobile: string;
     profilePercentage: number; 
   }
-
-  export interface User {
-    id: number;
-    name: string;
-    age: number;
-  }
