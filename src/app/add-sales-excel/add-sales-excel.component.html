@@ -1,0 +1,24 @@
+<div class="container py-5">
+    <h2 class="text-center">Upload Sales Report</h2>
+    <hr>
+    <input type="file" id="salesreport" class="form-control" formControlName="image" accept=".xlsx, .xls" (change)="onFileChange($event)" />
+    <hr>
+    <div *ngIf="parsedData.length">
+        <h3>Sales Data</h3>
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col" *ngFor="let header of headers">{{ header }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of parsedData">
+                    <td *ngFor="let header of headers">{{ row[header] }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        <h6>If Sales Data looks good, please submit.
+        <button type="submit" class="btn btn-primary" (click)="submitData()">Submit</button></h6>
+    </div>
+</div>
