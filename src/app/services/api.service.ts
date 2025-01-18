@@ -15,6 +15,7 @@ export class ApiService {
 
   private addAuthor_url = "Author/AddAuthor";
   private addBook_url = "Books/AddBook";
+  private addSalesExcel_url = "Sales/AddSalesExcel";
 
   private updateAuthor_url = "Author/UpdateAuthor";
   private updateBook_url = "Books/UpdateBook";
@@ -112,6 +113,11 @@ export class ApiService {
 
   updateBook(formData: any) {
     let obs = this.http.post(this.base_url + this.updateBook_url, formData);
+    return obs;
+  }
+
+  addSalesExcel(parsedData: any) {
+    let obs = this.http.post(this.base_url + this.addSalesExcel_url, parsedData);
     return obs;
   }
 }

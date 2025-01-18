@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import * as XLSX from 'xlsx';
+import { ApiService } from '../services/api.service';
+import Swal from 'sweetalert2';
 
 interface DataRow {
   [key: string]: any;
@@ -16,6 +18,11 @@ interface DataRow {
 export class AddSalesExcelComponent {
   parsedData: DataRow[] = [];
   headers: string[] = [];
+
+  constructor(private webapi: ApiService)
+  {
+    
+  }
 
   onFileChange(event: any): void {
     const target: DataTransfer = <DataTransfer>(event.target);
@@ -39,6 +46,7 @@ export class AddSalesExcelComponent {
       if (this.validateData(data)) {
         this.parsedData = data;
         this.headers = Object.keys(data[0]);
+        this.resetFileInput();
       } else {
         this.resetFileInput();
         this.parsedData = [];
@@ -110,12 +118,23 @@ export class AddSalesExcelComponent {
 
   // Submit data to API
   submitData(): void {
-    console.log(this.parsedData);
-    // const apiUrl = 'https://example.com/api/upload'; // Replace with your API URL
-    // this.http.post(apiUrl, this.parsedData).subscribe({
-    //   next: () => alert('Data submitted successfully!'),
-    //   error: (err) => alert('Error submitting data: ' + err.message)
-    // });
+    let addBook = this.webapi.addSalesExcel(this.parsedData);
+          addBook.subscribe((data: any) => {
+            if (data.statusCode == 400) {
+              Swal.fire({
+                title: data.validation[0].title,
+                text: data.validation[0].details,
+                icon: 'error',
+                confirmButtonText: 'Ok'
+              });
+            }
+            else {
+              Swal.fire({
+                title: data.message,
+                icon: "success"
+              });
+            }
+          })
   }
 
   resetFileInput() {
@@ -124,9 +143,5 @@ export class AddSalesExcelComponent {
     if (fileInput) {
       fileInput.value = '';
     }
-
-    // Reset data and headers
-    this.parsedData = [];
-    this.headers = [];
   }
 }
