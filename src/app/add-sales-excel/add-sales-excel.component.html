@@ -1,24 +1,42 @@
 <div class="container py-5">
     <h2 class="text-center">Upload Sales Report</h2>
     <hr>
-    <input type="file" id="salesreport" class="form-control" formControlName="image" accept=".xlsx, .xls" (change)="onFileChange($event)" />
+    <input type="file" id="salesreport" class="form-control" formControlName="image" accept=".xlsx, .xls"
+        (change)="onFileChange($event)" />
     <hr>
     <div *ngIf="parsedData.length">
         <h3>Sales Data</h3>
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr>
-                    <th scope="col" *ngFor="let header of headers">{{ header }}</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">ISBN</th>
+                    <th scope="col">OrderId</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Channel</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">MRP</th>
+                    <th scope="col">Quantity></th>
+                    <th scope="col">Royalty</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let row of parsedData">
-                    <td *ngFor="let header of headers">{{ row[header] }}</td>
+                    <td>{{ row.Title }}</td>
+                    <td>{{ row.ISBN }}</td>
+                    <td>{{ row.OrderId }}</td>
+                    <td>{{ row.Date | date: 'MMMM d, y'}}</td>
+                    <td>{{ row.Channel }}</td>
+                    <td>{{ row.Status }}</td>
+                    <td>{{ row.MRP }}</td>
+                    <td>{{ row.Quantity }}</td>
+                    <td>{{ row.Royalty }}</td>
                 </tr>
             </tbody>
         </table>
         <hr>
         <h6>If Sales Data looks good, please submit.
-        <button type="submit" class="btn btn-primary" (click)="submitData()">Submit</button></h6>
+            <button type="submit" class="btn btn-primary" (click)="submitData()">Submit</button>
+        </h6>
     </div>
 </div>

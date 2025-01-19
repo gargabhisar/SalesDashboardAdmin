@@ -9,3 +9,17 @@ export interface SalesModel {
     quantity: number;
     royalty: number;
 }
+
+export interface SalesViewModel {
+    Title: string;
+    ISBN: string;
+    Date: Date;
+    OrderId: string;
+    Channel: string;
+    Status: string;
+    MRP: number;
+    Quantity: number;
+    Royalty: number;
+}
+
+								

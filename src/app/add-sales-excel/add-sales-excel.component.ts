@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { ApiService } from '../services/api.service';
 import Swal from 'sweetalert2';
+import { SalesViewModel } from '../Models/SalesModel';
 
 interface DataRow {
   [key: string]: any;
@@ -16,12 +17,10 @@ interface DataRow {
   styleUrl: './add-sales-excel.component.css'
 })
 export class AddSalesExcelComponent {
-  parsedData: DataRow[] = [];
-  headers: string[] = [];
+  parsedData: Array<SalesViewModel> = [];
 
-  constructor(private webapi: ApiService)
-  {
-    
+  constructor(private webapi: ApiService) {
+
   }
 
   onFileChange(event: any): void {
@@ -40,12 +39,11 @@ export class AddSalesExcelComponent {
 
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
-      const data: DataRow[] = XLSX.utils.sheet_to_json(worksheet);
+      const data: Array<SalesViewModel> = XLSX.utils.sheet_to_json(worksheet);
 
       // Perform validation
-      if (this.validateData(data)) {
+      if (this.validateData(data)) {        
         this.parsedData = data;
-        this.headers = Object.keys(data[0]);
         this.resetFileInput();
       } else {
         this.resetFileInput();
@@ -118,23 +116,26 @@ export class AddSalesExcelComponent {
 
   // Submit data to API
   submitData(): void {
+    this.parsedData.forEach(row => {
+      row.ISBN = row.ISBN.toString();
+    });
     let addBook = this.webapi.addSalesExcel(this.parsedData);
-          addBook.subscribe((data: any) => {
-            if (data.statusCode == 400) {
-              Swal.fire({
-                title: data.validation[0].title,
-                text: data.validation[0].details,
-                icon: 'error',
-                confirmButtonText: 'Ok'
-              });
-            }
-            else {
-              Swal.fire({
-                title: data.message,
-                icon: "success"
-              });
-            }
-          })
+    addBook.subscribe((data: any) => {
+      if (data.statusCode == 400) {
+        Swal.fire({
+          title: data.validation[0].title,
+          text: data.validation[0].details,
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        });
+      }
+      else {
+        Swal.fire({
+          title: data.message,
+          icon: "success"
+        });
+      }
+    })
   }
 
   resetFileInput() {
