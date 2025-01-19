@@ -12,28 +12,28 @@
         <table class="table table-striped table-bordered mt-3">
             <thead>
                 <tr>
-                    <th (click)="sortTable('Title')">Title <i [class]="getSortClass('Title')"></i></th>
-                    <th (click)="sortTable('ISBN')">ISBN <i [class]="getSortClass('ISBN')"></i></th>
-                    <th (click)="sortTable('PublicationName')">PublicationName <i [class]="getSortClass('PublicationName')"></i></th>
-                    <th (click)="sortTable('OrderId')">OrderId <i [class]="getSortClass('OrderId')"></i></th>
-                    <th (click)="sortTable('Channel')">Channel <i [class]="getSortClass('Channel')"></i></th>
-                    <th (click)="sortTable('Status')">Status <i [class]="getSortClass('Status')"></i></th>
-                    <th (click)="sortTable('MRP')">MRP <i [class]="getSortClass('MRP')"></i></th>
-                    <th (click)="sortTable('Quantity')">Quantity <i [class]="getSortClass('Quantity')"></i></th>
-                    <th (click)="sortTable('Royalty')">Royalty <i [class]="getSortClass('Royalty')"></i></th>
+                    <th (click)="sortTable('title')">Title <i [class]="getSortClass('title')"></i></th>
+                    <th (click)="sortTable('isbn')">ISBN <i [class]="getSortClass('isbn')"></i></th>
+                    <th (click)="sortTable('orderId')">OrderId <i [class]="getSortClass('orderId')"></i></th>
+                    <th (click)="sortTable('date')">Date <i [class]="getSortClass('date')"></i></th>
+                    <th (click)="sortTable('channel')">Channel <i [class]="getSortClass('channel')"></i></th>
+                    <th (click)="sortTable('status')">Status <i [class]="getSortClass('status')"></i></th>
+                    <th (click)="sortTable('mrp')">MRP <i [class]="getSortClass('mrp')"></i></th>
+                    <th (click)="sortTable('quantity')">Quantity <i [class]="getSortClass('quantity')"></i></th>
+                    <th (click)="sortTable('royalty')">Royalty <i [class]="getSortClass('royalty')"></i></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let item of displayedDataForPage">
-                    <td>{{ item.Title }}</td>
-                    <td>{{ item.ISBN }}</td>
-                    <td>{{ item.PublicationName }}</td>
-                    <td>{{ item.OrderId }}</td>
-                    <td>{{ item.Channel }}</td>
-                    <td>{{ item.Status }}</td>
-                    <td>{{ item.MRP }}</td>
-                    <td>{{ item.Quantity }}</td>
-                    <td>{{ item.Royalty }}</td>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.isbn }}</td>
+                    <td>{{ item.orderId }}</td>
+                    <td>{{ item.date | date: 'MMMM d, y'}}</td>
+                    <td>{{ item.channel }}</td>
+                    <td>{{ item.status }}</td>
+                    <td>{{ item.mrp }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.royalty }}</td>
                 </tr>
             </tbody>
         </table>

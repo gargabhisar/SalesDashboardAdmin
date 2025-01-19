@@ -25,7 +25,8 @@ export class ApiService {
   private getAuthorDetailsById_url = "Author/AuthorDetailsById";
   private getDasboard_url = "Dashboard/AdminDashboardDetails";
   private getAllBooks_url = "Books/GetAllBooks";
-  private getBookDetailsByBookId_url = "Books/GetBookDetailsByBookId";  
+  private getBookDetailsByBookId_url = "Books/GetBookDetailsByBookId";
+  private getAllSalesForPublisher_url = "Sales/AllSalesForPublisher";
 
   constructor(private http: HttpClient) { }
 
@@ -118,6 +119,11 @@ export class ApiService {
 
   addSalesExcel(parsedData: any) {
     let obs = this.http.post(this.base_url + this.addSalesExcel_url, parsedData);
+    return obs;
+  }
+
+  getAllSalesForPublisher() {
+    let obs = this.http.get<any>(this.base_url + this.getAllSalesForPublisher_url);
     return obs;
   }
 }
