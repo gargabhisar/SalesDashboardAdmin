@@ -91,7 +91,6 @@ export class BookSalesComponent {
           });
         }
         else {
-          console.log(data.result);
           this.salesdata = data.result
           this.displayedData = data.result; // Save all data from API response
         }
