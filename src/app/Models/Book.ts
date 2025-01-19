@@ -1,7 +1,7 @@
 export interface Book {
   bookId : string;
   title: string;
-  iSBN: string;
+  isbn: string;
   size: string;
   pages: number;
   pricePaperback: number;

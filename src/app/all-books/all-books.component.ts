@@ -29,6 +29,7 @@ export class AllBooksComponent {
         }
         else {
           this.allBooks = data.result;
+          console.log(this.allBooks);
           // Sort the allBooks array based on the 'title' property
           this.allBooks.sort((a, b) => a.title.localeCompare(b.title));
         }
